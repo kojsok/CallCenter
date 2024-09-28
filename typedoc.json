@@ -1,0 +1,12 @@
+{
+    "entryPoints": ["src/**/*.{ts,tsx}"],
+    "out": "docs",
+    "includeVersion": true,
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "excludeExternals": true,
+    "theme": "default",
+    "name": "CallCenter App Docs",
+    "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/node_modules/**"],
+    "tsconfig": "tsconfig.json"
+  }
