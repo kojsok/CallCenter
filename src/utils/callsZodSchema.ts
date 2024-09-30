@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const callRecordSchema = z.object({
-    id: z.string().length(32, { message: "ID должен состоять из 32 символов" }),
+    id: z.string().min(4, { message: "ID должен состоять минимум из 4 символов" }),
     type: z.enum(['outgoing', 'incoming'], {
         errorMap: () => ({ message: "Тип звонка должен быть 'outgoing' или 'incoming'" })
     }),
@@ -15,11 +15,11 @@ const callRecordSchema = z.object({
         errorMap: () => ({ message: "callMood звонка должен быть 'positive', 'negative' или 'neutral'" })
     }),
     agentComment: z.string().optional(),
-    feedbackScore: z.number().min(0).max(5),
-    followUpRequired: z.boolean(),
+    feedbackScore: z.number().min(0, { message: "FeedbackScore должно быть 0 или больше" }).max(5,  { message: "FeedbackScore должно быть 5 или меньше" }),
+    followUpRequired: z.boolean({ message: "Follow-up должен быть  boolean значение" }),
     recordUrl: z.string().optional(),
-    clientId: z.string().length(32, { message: "ID должен состоять из 32 символов" }),
-    employeeId: z.string().length(32, { message: "ID должен состоять из 32 символов" }),
+    clientId: z.string().min(4, { message: "ID должен состоять минимум из 4 символов" }),
+    employeeId: z.string().min(4, { message: "ID должен состоять минимум из 4 символов" }),
     start: z.string().refine((date) => !isNaN(Date.parse(date)), {
         message: "Invalid start date format",
     }),
