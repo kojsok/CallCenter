@@ -3,12 +3,6 @@ import { Clients, clientsSchema } from "@/utils/clientsZodSchema";
 import axios from "axios";
 import { z } from "zod";
 
-// export const getClientsAxios2 = async (): Promise<Clients> => {
-//     const response = await axios.get('http://kojs.ru:4000/clients');
-//         // Валидируем массив данных с помощью Zod
-//     return clientsSchema.parse(response.data);
-//   };
-
 export const getClientsAxios = async (): Promise<Clients> => {
     try {
         const response = await axios.get('http://kojs.ru:4000/clients');

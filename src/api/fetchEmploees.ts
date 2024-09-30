@@ -2,11 +2,6 @@ import { Employees, employeesSchema } from "@/utils/employeesZodSchema";
 import axios from "axios";
 import { z } from "zod";
 
-// export const getEmployeesAxios2 = async (): Promise<Employees> => {
-//     const response = await axios.get('http://kojs.ru:4000/employees');
-//         // Валидируем массив данных с помощью Zod
-//     return employeesSchema.parse(response.data);
-//   };
 
   export const getEmployeesAxios = async (): Promise<Employees> => {
     try {

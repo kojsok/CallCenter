@@ -1,15 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
 import { Users, usersSchema } from "@/utils/usersZodSchema";
 import axios from "axios";
 import { z } from 'zod';
-import { QUERY_KEY_USERS, queryClient } from "../utils/queryDatas";
-
-// export const getUsersAxios2 = async (): Promise<Users> => {
-//     const response = await axios.get('http://kojs.ru:4000/users');
-//         // Валидируем массив данных с помощью Zod
-//     return usersSchema.parse(response.data);
-//   };
-
 
 export const getUsersAxios = async (): Promise<Users> => {
     try {

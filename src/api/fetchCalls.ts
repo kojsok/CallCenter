@@ -3,13 +3,6 @@ import { CallRecords, callRecordsSchema } from "@/utils/callsZodSchema";
 import axios from "axios";
 import { z } from "zod";
 
-// export const getCallsAxios2 = async (): Promise<CallRecords> => {
-//     const response = await axios.get('http://kojs.ru:4000/calls');
-//         // Валидируем массив данных с помощью Zod
-//     return callRecordsSchema.parse(response.data);
-//   };
-
-
   export const getCallsAxios = async (): Promise<CallRecords> => {
     try {
         const response = await axios.get('http://kojs.ru:4000/calls');
