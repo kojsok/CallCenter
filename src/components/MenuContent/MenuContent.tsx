@@ -28,7 +28,7 @@ const secondaryListItems = [
 export default function MenuContent() {
   return (
    
-    <Stack className='shrink-0 p-1 justify-between bg-[#1976d2] w-60 h-screen box-border shadow-lg'>
+    <Stack className='shrink-0 p-1 justify-between bg-[#1976d2] w-60 h-screen box-border shadow-lg border-2 border-gray-950'>
       <List dense>
         {mainListItems.map((item, index) => (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
