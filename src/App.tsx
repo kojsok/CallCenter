@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import './App.css'
-import SearchAppBar from './components/SearchAppBar/SearchAppBar'
 import { useEmploeesData } from './hooks/useEmploeesData';
 import { getEmployeesAxios } from './api/fetchEmploees';
-import { Container } from '@mui/material';
+import { Box} from '@mui/material';
+import SideMenu from './components/SideMenu/SideMenu';
+import SearchAppBar from './components/SearchAppBar/SearchAppBar';
 
 
 function App() {
@@ -30,8 +31,13 @@ function App() {
 
   return (
     <>
-      <SearchAppBar />
-      <Container maxWidth="sm" className='mt-6'>
+     <Box sx={{ display: 'flex' }}>
+              <SideMenu />
+              <SearchAppBar />
+      </Box>
+      {/* <SearchAppBar />
+      <SideMenu /> */}
+      {/* <Container maxWidth="sm" className='mt-6'>
         <div className="p-6 rounded-lg shadow-lg employees-list bg-gradient-to-r from-gray-100 via-white to-gray-100 backdrop-blur-md">
           <h2 className="mb-4 text-2xl font-semibold text-gray-800">Employees</h2>
           {data && data.length > 0 ? (
@@ -57,7 +63,7 @@ function App() {
             <p className="text-lg text-gray-500">No employees found.</p>
           )}
         </div>
-      </Container>
+      </Container> */}
 
 
     </>

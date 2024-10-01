@@ -3,9 +3,18 @@ import axios from "axios";
 import { z } from "zod";
 
 
+const API_TOKEN = "your_secure_access_token_here";
+
+const options = {
+    headers: {
+    //   'x-access-token': API_TOKEN, // Замените на ваш ключ API { Authorization: `Bearer ${token}` }
+    Authorization: `Bearer ${API_TOKEN}`
+    },
+  };
+
   export const getEmployeesAxios = async (): Promise<Employees> => {
     try {
-        const response = await axios.get('http://kojs.ru:4000/employees');
+        const response = await axios.get('http://kojs.ru:4000/employees', options);
         // Валидируем массив данных с помощью Zod
         return employeesSchema.parse(response.data);;
     } catch (error) {

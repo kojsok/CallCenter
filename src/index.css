@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-indigo-950;
+  @apply bg-white;
 }
 
 /* :root {
