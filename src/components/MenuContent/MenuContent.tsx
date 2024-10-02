@@ -33,7 +33,7 @@ export default function MenuContent() {
       <List dense>
         {mainListItems.map((item, index) => (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton className='bg-gradient-to-r hover:from-sky-500 hover:to-indigo-500' selected={index === 0}>
+            <ListItemButton className='hover:border hover:rounded-lg hover:shadow-lg bg-gradient-to-r hover:from-sky-500 hover:to-indigo-500' selected={index === 0}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText className='text-white' primary={item.text}  />
             </ListItemButton>
@@ -44,7 +44,7 @@ export default function MenuContent() {
       <List dense>
         {secondaryListItems.map((item, index) => (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton>
+            <ListItemButton className='hover:border hover:rounded-lg hover:shadow-lg bg-gradient-to-r hover:from-sky-500 hover:to-indigo-500'>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText className='text-white' primary={item.text} />
             </ListItemButton>

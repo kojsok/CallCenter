@@ -5,6 +5,7 @@ import { getEmployeesAxios } from './api/fetchEmploees';
 import { Box} from '@mui/material';
 import SideMenu from './components/SideMenu/SideMenu';
 import SearchAppBar from './components/SearchAppBar/SearchAppBar';
+import Loader from './components/Loader/Loader';
 
 
 function App() {
@@ -25,8 +26,8 @@ function App() {
 
   const { data, error, isLoading } = useEmploeesData();
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {(error as Error).message}</p>;
+  if (isLoading) return <Loader/>;
+  if (error) return <p className="flex items-center justify-center min-h-screen text-red-500"> Не возможно подключиться к серверу, проверье соединение. Error: {(error as Error).message}</p>;
 
 
   return (
