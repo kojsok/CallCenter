@@ -10,7 +10,7 @@ import SearchInput from '../SearchInput/SearchInput';
 export default function SearchAppBar() {
   return (
     <Box className="bg-gradient-to-r from-[#000319] via-indigo-950 to-indigo-700" sx={{ flexGrow: 1 }}>
-      <AppBar  position="static">
+      <AppBar position="static">
         <Toolbar className='bg-[#000319] border-b-2 border-b-sky-500'>
           <IconButton className="text-white hover:text-sky-500"
             size="large"
