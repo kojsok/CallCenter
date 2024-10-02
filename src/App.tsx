@@ -33,7 +33,7 @@ function App() {
   return (
     <>
       <SearchAppBar />
-      <Box className="flex min-h-screen">
+      <Box className="flex">
         <SideMenu />
         <p className="text-2xl font-bold text-center text-white">Clients</p>
 
