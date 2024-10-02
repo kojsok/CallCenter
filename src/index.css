@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-white;
+  @apply bg-[#000319];
 }
 
 /* :root {

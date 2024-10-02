@@ -52,7 +52,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchAppBar() {
   return (
-    <Box className="bg-gray-100" sx={{ flexGrow: 1 }}>
+    <Box className="bg-gradient-to-r from-[#000319] via-indigo-950 to-indigo-700" sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton

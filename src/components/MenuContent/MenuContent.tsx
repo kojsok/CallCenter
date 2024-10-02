@@ -27,12 +27,13 @@ const secondaryListItems = [
 
 export default function MenuContent() {
   return (
-   
-    <Stack className='shrink-0 p-1 justify-between bg-[#1976d2] w-60 h-screen box-border shadow-lg border-2 border-gray-950'>
+   //bg-[#1976d2] --- border-r border-transparent after:absolute after:top-0 after:right-0 after:bottom-0 after:w-1 after:bg-gradient-to-b after:from-green-400 after:to-blue-500 after:rounded-full after:shadow-neon h-64 w-64
+   //<Stack className='shrink-0 p-1 justify-between bg-[#000319] w-60 h-screen box-border shadow-lg border-2 border-sky-700'>
+    <Stack className='shrink-0 p-1 justify-between bg-[primary-color] w-60 h-screen border-2 border-transparent border-r-sky-600'>
       <List dense>
         {mainListItems.map((item, index) => (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton  selected={index === 0}>
+            <ListItemButton className='bg-gradient-to-r hover:from-sky-500 hover:to-indigo-500' selected={index === 0}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText className='text-white' primary={item.text}  />
             </ListItemButton>
