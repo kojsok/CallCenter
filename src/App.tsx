@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import './App.css'
 import { useEmploeesData } from './hooks/useEmploeesData';
 import { getEmployeesAxios } from './api/fetchEmploees';
-import { Box} from '@mui/material';
+import { Box } from '@mui/material';
 import SideMenu from './components/SideMenu/SideMenu';
 import SearchAppBar from './components/SearchAppBar/SearchAppBar';
 import Loader from './components/Loader/Loader';
@@ -26,15 +26,17 @@ function App() {
 
   const { data, error, isLoading } = useEmploeesData();
 
-  if (isLoading) return <Loader/>;
+  if (isLoading) return <Loader />;
   if (error) return <p className="flex items-center justify-center min-h-screen text-red-500"> Не возможно подключиться к серверу, проверье соединение. Error: {(error as Error).message}</p>;
 
 
   return (
     <>
-     <Box sx={{ display: 'flex' }}>
-              <SideMenu />
-              <SearchAppBar />
+      <SearchAppBar />
+      <Box className="flex min-h-screen">
+        <SideMenu />
+        <p className="text-2xl font-bold text-center text-white">Clients</p>
+
       </Box>
       {/* <SearchAppBar />
       <SideMenu /> */}
