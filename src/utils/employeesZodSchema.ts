@@ -16,7 +16,7 @@ const employeSchema = z.object({
     errorMap: () => ({ message: "Пол должен быть 'male', 'female' или 'other'" }) 
   }),
   position: z.string().min(1, { message: "Должность не может быть пустой" }),
-  status: z.enum(['free', 'on-break'], { 
+  status: z.enum(['free', 'on-break', 'busy'], { 
     errorMap: () => ({ message: "Статус должен быть 'free' или 'on-break'" }) 
   }),
   createdAt: z.string().refine((date) => !isNaN(Date.parse(date)), {

@@ -1,9 +1,10 @@
 import { Employees, employeesSchema } from "@/utils/employeesZodSchema";
 import axios from "axios";
 import { z } from "zod";
+import { API_TOKEN } from "./apitoken";
 
 
-const API_TOKEN = "your_secure_access_token_here";
+// const API_TOKEN = "your_secure_access_token_here";
 
 const options = {
     headers: {
