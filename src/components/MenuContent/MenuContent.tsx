@@ -11,14 +11,31 @@ import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
+import { NavLink } from 'react-router-dom';
 
 import { Divider } from '@mui/material';
 
 const mainListItems = [
-  { text: 'Home', icon: <HomeRoundedIcon className='text-app' /> },
-  { text: 'Analytics', icon: <AnalyticsRoundedIcon className='text-app' /> },
-  { text: 'Clients', icon: <PeopleRoundedIcon className='text-app' /> },
-  { text: 'Calls', icon: <AssignmentRoundedIcon className='text-app' /> },
+  {
+    text: 'Home',
+    path: '/',
+    icon: <HomeRoundedIcon className='text-app' />
+  },
+  {
+    text: 'Analytics',
+    path: 'analytics',
+    icon: <AnalyticsRoundedIcon className='text-app' />
+  },
+  {
+    text: 'Clients',
+    path: 'clients',
+    icon: <PeopleRoundedIcon className='text-app' />
+  },
+  {
+    text: 'Calls',
+    path: 'calls',
+    icon: <AssignmentRoundedIcon className='text-app' />
+  },
 ];
 
 const secondaryListItems = [
@@ -32,8 +49,21 @@ export default function MenuContent() {
     <Stack className='p-1 min-h-screen justify-start bg-appBg w-60 border-r-2 border-transparent border-r-sky-600'>
       <List dense sx={{ mb: "40px" }}>
         {mainListItems.map((item, index) => (
-          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton className="hover:border hover:rounded-lg hover:shadow-lg bg-gradient-to-r hover:from-primary-main hover:to-primary-dark" selected={index === 0}>
+          <ListItem
+            key={index}
+            disablePadding
+            sx={{ display: 'block' }}
+          >
+            <ListItemButton
+              component={NavLink}
+              to={item.path}
+              className="hover:border hover:rounded-lg hover:shadow-lg bg-gradient-to-r hover:from-primary-main hover:to-primary-dark"
+              sx={{
+                "&.active": {
+                  backgroundColor: "#1455967d"
+                }
+              }}
+            >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText className='text-app' primary={item.text} />
             </ListItemButton>
