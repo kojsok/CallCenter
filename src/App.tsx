@@ -2,32 +2,36 @@ import { useEffect } from 'react';
 import './App.css'
 import { useEmploeesData } from './hooks/useEmploeesData';
 import { getEmployeesAxios } from './api/fetchEmploees';
-import { Box } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import SideMenu from './components/SideMenu/SideMenu';
 import SearchAppBar from './components/SearchAppBar/SearchAppBar';
 import Loader from './components/Loader/Loader';
+import PageHeader from './components/PageHeader/PageHeader';
+import ClientsFilter from './components/ClientsFilter/ClientsFilter';
+import ClientList from './components/ClientsList/ClientList';
+import Clients from './Pages/Clients';
 
 
 function App() {
 
-  useEffect(() => {
-    const fetchCalls = async () => {
-      try {
-        const employees = await getEmployeesAxios();
-        console.log(employees); // Logs the call data
-      } catch (error) {
-        console.error('Failed to fetch calls:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchCalls = async () => {
+  //     try {
+  //       const employees = await getEmployeesAxios();
+  //       console.log(employees); // Logs the call data
+  //     } catch (error) {
+  //       console.error('Failed to fetch calls:', error);
+  //     }
+  //   };
 
-    fetchCalls();
-  }, []);
+  //   fetchCalls();
+  // }, []);
 
 
-  const { data, error, isLoading } = useEmploeesData();
+  // const { data, error, isLoading } = useEmploeesData();
 
-  if (isLoading) return <Loader />;
-  if (error) return <p className="flex items-center justify-center min-h-screen text-red-500"> Не возможно подключиться к серверу, проверье соединение. Error: {(error as Error).message}</p>;
+  // if (isLoading) return <Loader />;
+  // if (error) return <p className="flex items-center justify-center min-h-screen text-red-500"> Не возможно подключиться к серверу, проверье соединение. Error: {(error as Error).message}</p>;
 
 
   return (
@@ -35,8 +39,7 @@ function App() {
       <SearchAppBar />
       <Box className="flex">
         <SideMenu />
-        <p className="text-2xl font-bold text-center text-white">Clients</p>
-
+        <Clients />
       </Box>
       {/* <SearchAppBar />
       <SideMenu /> */}

@@ -2,9 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-[#000319];
+:root {
+  --textColor: #ffffff;
+  --appBg: #000319
 }
+
+.theme-light {}
+
+body {
+  @apply bg-appBg;
+}
+
+
 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
