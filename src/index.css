@@ -7,7 +7,10 @@
   --appBg: #000319
 }
 
-.theme-light {}
+.theme-light {
+  --textColor: black;
+  --appBg: white;
+}
 
 body {
   @apply bg-appBg;

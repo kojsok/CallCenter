@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        appBg: "var(--appBg)",
+        appBg: "var(--appBg)", //dark theme: #000319
         secondaryBg: "#253662",
         primary: {
           main: "#0ea5e9",
@@ -13,11 +13,8 @@ export default {
           dark: "#6366f1",
         },
       },
-      // backgroundColor: {
-      //   app: "var(--appBg)",
-      // },
       textColor: {
-        app: "var(--textColor)",
+        app: "var(--textColor)", //dark theme: #ffffff
         second: "#7c8fac",
       },
     },
