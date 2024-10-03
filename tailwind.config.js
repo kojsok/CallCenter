@@ -3,19 +3,31 @@ export default {
   content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
 
   theme: {
+    screens: {
+      xs: "0px",
+      // => @media (min-width: 0px) { ... }
+      sm: "600px",
+      // => @media (min-width: 600px) { ... }
+      md: "900px",
+      // => @media (min-width: 900px) { ... }
+      lg: "1200px",
+      // => @media (min-width: 1200px) { ... }
+      xl: "1536px",
+      // => @media (min-width: 1536px) { ... }
+    },
     extend: {
       colors: {
-        appBg: "var(--appBg)", //dark theme: #000319
-        secondaryBg: "#253662",
+        appBg: "var(--appBg)",
+        secondaryBg: "var(--secondaryBg)",
         primary: {
-          main: "#0ea5e9",
-          light: "#1455967d",
-          dark: "#6366f1",
+          main: "var(--primary-main)",
+          light: "var(--primary-light)",
+          dark: "var(--primary-dark)",
         },
       },
       textColor: {
-        app: "var(--textColor)", //dark theme: #ffffff
-        second: "#7c8fac",
+        app: "var(--textApp)",
+        second: "var(--textSecond)",
       },
     },
   },

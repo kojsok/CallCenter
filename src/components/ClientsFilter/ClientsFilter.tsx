@@ -9,7 +9,7 @@ const ClientsFilter = () => {
     <Box className="w-[20%] border-r-2 border-primary-light flex flex-col gap-y-5 p-8">
       <Button
         variant="contained"
-        sx={{ textTransform: "capitalize" }}
+        sx={{ textTransform: "capitalize", borderRadius: '10px', py: "10px" }}
         className="bg-gradient-to-r from-primary-main to-primary-dark hover:brightness-110">
         Add New Client
       </Button>
@@ -30,7 +30,7 @@ const ClientsFilter = () => {
           selected={false}
         />
       </List>
-      <Divider variant='fullWidth' sx={{ borderColor: '#1455967d' }} />
+      <Divider variant='fullWidth' sx={{ borderColor: 'var(--primary-light)' }} />
     </Box>
   );
 }
