@@ -27,7 +27,7 @@ export default {
       },
       textColor: {
         app: "var(--textApp)",
-        second: "var(--textSecond)",
+        second: "var(--text-second)",
       },
     },
   },

@@ -6,7 +6,7 @@ import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact
 
 const ClientsFilter = () => {
   return (
-    <Box className="w-[20%] border-r-2 border-primary-light flex flex-col gap-y-5 p-8">
+    <Box className="w-[max(20%,240px)] border-r-2 border-primary-light flex shrink-0 flex-col gap-y-5 p-8">
       <Button
         variant="contained"
         sx={{ textTransform: "capitalize", borderRadius: '10px', py: "10px" }}
@@ -30,7 +30,7 @@ const ClientsFilter = () => {
           selected={false}
         />
       </List>
-      <Divider variant='fullWidth' sx={{ borderColor: 'var(--primary-light)' }} />
+      <Divider variant='fullWidth' sx={{ borderColor: 'var(--primary-light)', borderWidth: '1px' }} />
     </Box>
   );
 }

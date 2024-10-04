@@ -71,7 +71,7 @@ export default function MenuContent() {
         ))}
       </List>
 
-      <Divider variant='middle' textAlign='center' sx={{ borderColor: '#1455967d' }} />
+      <Divider variant='middle' textAlign='center' sx={{ borderColor: 'var(--primary-light)', borderWidth: '1px' }} />
       <List dense >
         {secondaryListItems.map((item, index) => (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
