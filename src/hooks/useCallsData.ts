@@ -3,7 +3,7 @@ import { CallRecords } from "@/utils/callsZodSchema";
 import { QUERY_KEY_CALLS_DATA, queryClient } from "@/utils/queryDatas";
 import { useQuery } from "@tanstack/react-query";
 
-export const useClientsData = () => {
+export const useCallsData = () => {
     // console.log("Функция запроса на сервер вызвалась")
     return useQuery<CallRecords>({
         queryKey: QUERY_KEY_CALLS_DATA,
