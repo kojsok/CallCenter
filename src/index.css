@@ -3,8 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --textColor: #ffffff;
-  --appBg: #000319
+  /* theme vars */
+  --textApp: #ffffff;
+  --appBg: #000319;
+
+  /* other colors */
+  --secondaryBg: #253662;
+  --primary-main: #0ea5e9;
+  --primary-light: #1455967d;
+  --primary-dark: #6366f1;
+
+  --text-second: #7c8fac;
 }
 
 .theme-light {
