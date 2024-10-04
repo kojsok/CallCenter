@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'; // Для генерации уникаль
 import { RootState, AppDispatch } from '../store'; // Импорт типов
 import { Box } from '@mui/material';
 import { useClientsData } from '@/hooks/useClientsData';
+import Loader from '@/components/Loader/Loader';
 
 
 const ClientsComponent: React.FC = () => {
@@ -15,8 +16,8 @@ const ClientsComponent: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   // Использование useClientsData для запроса данных с сервера
-  const { data: clientsData, error } = useClientsData();
-  console.log(clientsData, error);
+  const { data: clientsData, error, isError, isLoading } = useClientsData();
+  console.log(clientsData, error, isError);
 
 
   const handleAddClient = () => {
@@ -52,6 +53,12 @@ const ClientsComponent: React.FC = () => {
   const handleDeleteClient = (id: string) => {
     dispatch(deleteClient(id));
   };
+
+  if (isLoading) return <Loader />;
+
+  if (isError) {
+    return <div style={{ color: 'red' }}>Ошибка загрузки клиентов: {error.message}</div>;
+  }
 
   return (
     <Box className="flex flex-col border-2 rounded-2xl border-primary-light grow">

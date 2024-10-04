@@ -18,9 +18,9 @@ export const getClientsAxios = async (): Promise<Clients> => {
         return clientsSchema.parse(response.data);;
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            throw new Error(`Axios error: ${error.response?.data}`);
+            throw new Error(`Axios error: ${error.message} - ${error.response?.data} - ${error.response?.status} - ${error.response?.statusText} - ${error.response?.headers}`);
         } else if (error instanceof z.ZodError) {
-            throw new Error(`Zod validation error: ${error.errors}`);
+            throw new Error(`Zod validation error: ${error.errors} - ${error.errors.map(e => e.message).join(', ')}`);
         } else {
             throw new Error('Unexpected error occurred (Произошла непредвиденная ошибка)');
         }

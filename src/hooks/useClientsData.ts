@@ -12,5 +12,15 @@ export const useClientsData = () => {
         // Опции запроса можно добавлять по необходимости:
         // staleTime: 1000 * 60 * 5, // Данные кэшируются на 5 минут
         // refetchInterval: 1000 * 60, // Запрос данных каждую минуту
+        // retry: 3,
+        // onError: (error: Error) => {
+        //     // Здесь вы можете добавить дополнительную логику обработки ошибок, если необходимо
+        //     console.error('Error fetching clients:', error.message);
+        //   },
+        retry: (failureCount, error) => {
+            // Здесь вы можете добавить дополнительную логику обработки ошибок, если необходимо
+            console.error('Error fetching clients:', error.message);
+            return false; // Return false to stop retrying
+        },
     }, queryClient);
 };
