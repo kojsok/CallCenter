@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* to use in tw: 
+  - for text: text-app, text-second
+  - other colors: bg-appBg, border-primary-main
+
+  to use in mui sx():
+  - var(--textApp), var(--text-second), var(--appBg), var(primary-main)
+*/
+
 :root {
   /* theme vars */
   --textApp: #ffffff;
@@ -17,7 +25,7 @@
 }
 
 .theme-light {
-  --textColor: black;
+  --textApp: black;
   --appBg: white;
 }
 
