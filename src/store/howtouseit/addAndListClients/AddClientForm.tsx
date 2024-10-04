@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addClient, Client } from '../../store/clientsSlice';
+import { addClient, Client } from '../../clientsSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 const AddClientForm: React.FC = () => {

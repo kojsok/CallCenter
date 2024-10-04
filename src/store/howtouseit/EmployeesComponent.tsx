@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from './store';
-import { addEmployee, updateEmployee, deleteEmployee, IEmployee } from './employeesSlice';
+import { RootState } from '../store';
+import { addEmployee, updateEmployee, deleteEmployee, IEmployee } from '../employeesSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 // Компонент для управления сотрудниками

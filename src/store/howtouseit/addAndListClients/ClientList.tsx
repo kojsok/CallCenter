@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store/store';
-import { deleteClient, updateClient, Client } from '../../store/clientsSlice';
+import { RootState } from '../../store';
+import { deleteClient, updateClient, Client } from '../../clientsSlice';
 
 const ClientList: React.FC = () => {
   const clients = useSelector((state: RootState) => state.clients.clients);
