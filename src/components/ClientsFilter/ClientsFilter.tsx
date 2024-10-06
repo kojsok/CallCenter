@@ -1,36 +1,43 @@
-import { Box, Button, Divider, List } from "@mui/material";
-import FilterBtn from "./FilterBtn";
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import StarBorderPurple500Icon from '@mui/icons-material/StarBorderPurple500';
-import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
+import { Box, Button, useMediaQuery } from "@mui/material";
+import DesktopFilter from "./DesktopFilter";
+import { FilterItem } from "@/Pages/Clients";
+import { FC } from "react";
+import MobileFilter from "./MobileFilter";
 
-const ClientsFilter = () => {
+interface ClientsFilterProps {
+  filterInner: FilterItem[]
+}
+
+const ClientsFilter: FC<ClientsFilterProps> = ({ filterInner }) => {
+  const matches = useMediaQuery('(min-width:1200px)')
   return (
-    <Box className="w-[max(20%,240px)] border-r-2 border-primary-light flex shrink-0 flex-col gap-y-5 p-8">
+    <Box className="
+       
+      flex 
+      gap-5 
+      xs:col-span-2
+      xs:flex-row 
+      lg:flex-col 
+      lg:row-start-1 
+      lg:row-end-3 
+      lg:col-span-1 
+      lg:p-8 
+      lg:border-r-2
+      lg:border-primary-light">
       <Button
         variant="contained"
-        sx={{ textTransform: "capitalize", borderRadius: '10px', py: "10px" }}
+        sx={{
+          textTransform: "capitalize", borderRadius: '10px', py: {
+            xs: "5px", lg: "10px"
+          }
+        }}
         className="bg-gradient-to-r from-primary-main to-primary-dark hover:brightness-110">
         Add New Client
       </Button>
-      <List className="text-app">
-        <FilterBtn
-          textContent="All"
-          SvgIcon={<MailOutlineIcon />}
-          selected={true}
-        />
-        <FilterBtn
-          textContent="Frequent"
-          SvgIcon={<ConnectWithoutContactIcon />}
-          selected={false}
-        />
-        <FilterBtn
-          textContent="Starred"
-          SvgIcon={<StarBorderPurple500Icon />}
-          selected={false}
-        />
-      </List>
-      <Divider variant='fullWidth' sx={{ borderColor: 'var(--primary-light)', borderWidth: '1px' }} />
+      {
+        matches ? <DesktopFilter filterInner={filterInner} /> : <MobileFilter filterInner={filterInner} />
+      }
+
     </Box>
   );
 }

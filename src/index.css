@@ -17,6 +17,7 @@
 
   /* other colors */
   --secondaryBg: #253662;
+  --secondaryBg05: rgba(37, 54, 98, 0.5);
   --primary-main: #0ea5e9;
   --primary-light: #1455967d;
   --primary-dark: #6366f1;
