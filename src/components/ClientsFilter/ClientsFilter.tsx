@@ -1,4 +1,4 @@
-import { Box, Button, useMediaQuery } from "@mui/material";
+import { Button, useMediaQuery } from "@mui/material";
 import DesktopFilter from "./DesktopFilter";
 import { FilterItem } from "@/Pages/Clients";
 import { FC } from "react";
@@ -11,19 +11,7 @@ interface ClientsFilterProps {
 const ClientsFilter: FC<ClientsFilterProps> = ({ filterInner }) => {
   const matches = useMediaQuery('(min-width:1200px)')
   return (
-    <Box className="
-       
-      flex 
-      gap-5 
-      xs:col-span-2
-      xs:flex-row 
-      lg:flex-col 
-      lg:row-start-1 
-      lg:row-end-3 
-      lg:col-span-1 
-      lg:p-8 
-      lg:border-r-2
-      lg:border-primary-light">
+    <>
       <Button
         variant="contained"
         sx={{
@@ -38,7 +26,7 @@ const ClientsFilter: FC<ClientsFilterProps> = ({ filterInner }) => {
         matches ? <DesktopFilter filterInner={filterInner} /> : <MobileFilter filterInner={filterInner} />
       }
 
-    </Box>
+    </>
   );
 }
 

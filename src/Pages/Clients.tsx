@@ -22,7 +22,8 @@ const Clients = () => {
     <Container>
       <Box className='py-8 flex grow gap-y-8 flex-col h-[calc(100vh-65px)]'>
         <PageHeader title="Clients" descr='List Your Clients'></PageHeader>
-        <Box className="
+        <Box
+          className="
           grid
           grid-rows-[7%_auto] 
           grow 
@@ -32,10 +33,35 @@ const Clients = () => {
           lg:gap-0
           lg:rounded-2xl
           lg:border-primary-light  
-          lg:border-2">
-          <ClientsFilter filterInner={filterItemsList} />
-          <ClientList />
-          <ClientCard />
+          lg:border-2"
+        >
+          <Box
+            className="
+            flex 
+            gap-5 
+            xs:col-span-2
+            xs:flex-row 
+            lg:flex-col 
+            lg:row-start-1 
+            lg:row-end-3 
+            lg:col-span-1 
+            lg:p-8 
+            lg:border-r-2
+            lg:border-primary-light"
+          >
+            <ClientsFilter filterInner={filterItemsList} />
+          </Box>
+          <Box
+            className="
+            lg:row-span-2 
+            lg:border-r-2 
+            lg:border-primary-light"
+          >
+            <ClientList />
+          </Box>
+          <Box>
+            <ClientCard />
+          </Box>
         </Box>
       </Box>
     </Container>
