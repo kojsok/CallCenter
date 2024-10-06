@@ -49,7 +49,7 @@ const Clients = () => {
             lg:row-start-1 
             lg:row-end-3 
             lg:col-span-1 
-            lg:p-8 
+            lg:p-6 
             lg:border-r-2
             lg:border-primary-light"
           >
@@ -57,6 +57,7 @@ const Clients = () => {
           </Box>
           <Box
             className="
+            lg:p-6
             lg:row-span-2 
             lg:border-r-2 
             lg:border-primary-light"
