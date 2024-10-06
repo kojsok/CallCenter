@@ -4,8 +4,10 @@ import PageHeader from "@/components/PageHeader/PageHeader";
 import { Box, Container } from "@mui/material";
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import StarBorderPurple500Icon from '@mui/icons-material/StarBorderPurple500';
-import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import ClientCard from "@/components/ClientCard/ClientCard";
+import WhatshotOutlinedIcon from '@mui/icons-material/WhatshotOutlined';
+import DoNotDisturbOnOutlinedIcon from '@mui/icons-material/DoNotDisturbOnOutlined';
+import PriorityHighOutlinedIcon from '@mui/icons-material/PriorityHighOutlined';
 
 export interface FilterItem {
   textContent: string, icon: React.ReactNode, divider: boolean
@@ -13,8 +15,10 @@ export interface FilterItem {
 
 const filterItemsList: FilterItem[] = [
   { textContent: 'All', icon: <MailOutlineIcon />, divider: false },
-  { textContent: 'Frequent', icon: <ConnectWithoutContactIcon />, divider: false },
-  { textContent: 'Starred', icon: <StarBorderPurple500Icon />, divider: true },
+  { textContent: 'Starred', icon: <StarBorderPurple500Icon />, divider: false },
+  { textContent: 'Active', icon: <WhatshotOutlinedIcon />, divider: false },
+  { textContent: 'Inactive', icon: <DoNotDisturbOnOutlinedIcon />, divider: false },
+  { textContent: 'Particular', icon: <PriorityHighOutlinedIcon />, divider: true },
 ]
 
 const Clients = () => {
