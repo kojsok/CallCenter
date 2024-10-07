@@ -9,7 +9,7 @@ interface PageHeaderProps {
 
 const PageHeader: FC<PageHeaderProps> = ({ title, descr }) => {
   return (
-    <Box className="flex flex-col px-8 py-6 bg-secondaryBg rounded-2xl relative overflow-hidden">
+    <Box className="flex flex-col shrink-0 px-8 py-6 bg-secondaryBg rounded-2xl relative overflow-hidden">
       <Typography
         className="text-app mb-1"
         variant="h1"
