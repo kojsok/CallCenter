@@ -6,7 +6,7 @@ const contactsSchema = z.object({
     email: z.string().email({ message: "Неверный формат email" }),
   });
 
-const clientSchema = z.object({
+export const clientSchema = z.object({
   id: z.string().min(4, { message: "ID должен состоять минимум из 4 символов" }),
   firstName: z.string().min(1, { message: "Имя не может быть пустым" }),
   lastName: z.string().min(1, { message: "Фамилия не может быть пустым" }),
@@ -16,13 +16,13 @@ const clientSchema = z.object({
   }),
   image: z.string().url({ message: "Неверный URL изображения" }),
   contacts: contactsSchema,
-  notes: z.array(z.string()),
+  notes:  z.array(z.string()).min(1, { message: "Должен быть хотя бы один комментарий." }),
   interactionsCount: z.number().int().nonnegative({ message: "Количество взаимедействий должно быть положительным целым числом" }),
   lastInteractionDate: z.string().datetime(),
   createdAt: z.string().refine((date) => !isNaN(Date.parse(date)), {
     message: "createdAt должен быть валидной датой в формате ISO",
   }),
-  status: z.enum(['VIP', 'active', 'new', 'problematic', 'inactive',]),
+  status: z.enum(['VIP', 'active', 'new', 'problematic', 'inactive', 'regular']),
   updatedAt: z.string().refine((date) => !isNaN(Date.parse(date)), {
     message: "updatedAt должен быть валидной датой в формате ISO",
   }),
@@ -30,4 +30,6 @@ const clientSchema = z.object({
 
 export const clientsSchema = z.array(clientSchema);
 
-export type Clients = z.infer<typeof clientsSchema>;
+export type Clients = z.infer<typeof clientsSchema>; // массив обьектов
+
+export type ClientFormData = z.infer<typeof clientSchema>; //для форм читсый обьект
