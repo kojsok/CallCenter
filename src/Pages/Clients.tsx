@@ -14,11 +14,11 @@ export interface FilterItem {
 }
 
 const filterItemsList: FilterItem[] = [
-  { textContent: 'All', icon: <MailOutlineIcon />, divider: false },
-  { textContent: 'Starred', icon: <StarBorderPurple500Icon />, divider: false },
-  { textContent: 'Active', icon: <WhatshotOutlinedIcon />, divider: false },
-  { textContent: 'Inactive', icon: <DoNotDisturbOnOutlinedIcon />, divider: false },
-  { textContent: 'Particular', icon: <PriorityHighOutlinedIcon />, divider: true },
+  { textContent: 'All', icon: <MailOutlineIcon fontSize="small" />, divider: false },
+  { textContent: 'Starred', icon: <StarBorderPurple500Icon fontSize="small" />, divider: false },
+  { textContent: 'Active', icon: <WhatshotOutlinedIcon fontSize="small" />, divider: false },
+  { textContent: 'Inactive', icon: <DoNotDisturbOnOutlinedIcon fontSize="small" />, divider: false },
+  { textContent: 'Particular', icon: <PriorityHighOutlinedIcon fontSize="small" />, divider: true },
 ]
 
 const Clients = () => {
@@ -28,11 +28,13 @@ const Clients = () => {
         <PageHeader title="Clients" descr='List Your Clients'></PageHeader>
         <Box
           className="
+          overflow-hidden
           grid
-          grid-rows-[7%_auto] 
           grow 
+          xs:grid-rows-[38px_calc(100%-54px)]
           xs:grid-cols-[min(100%,300px)_1fr] 
           xs:gap-4
+          lg:grid-rows-[38px_calc(100%-38px)] 
           lg:grid-cols-[minmax(240px,20%)_minmax(320px,30%)_1fr]
           lg:gap-0
           lg:rounded-2xl
@@ -57,6 +59,7 @@ const Clients = () => {
           </Box>
           <Box
             className="
+            h-full
             lg:p-6
             lg:row-span-2 
             lg:border-r-2 
