@@ -8,7 +8,7 @@ import StarBorderPurple500Icon from '@mui/icons-material/StarBorderPurple500';
 import WhatshotOutlinedIcon from '@mui/icons-material/WhatshotOutlined';
 import DoNotDisturbOnOutlinedIcon from '@mui/icons-material/DoNotDisturbOnOutlined';
 import PriorityHighOutlinedIcon from '@mui/icons-material/PriorityHighOutlined';
-import ClientsForm from "@/components/ClientsAddForm/ClientsForm";
+import ClientsForm from "@/components/ClientsForm/ClientsForm";
 
 export interface FilterItem {
   textContent: string, icon: React.ReactNode, divider: boolean

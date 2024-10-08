@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { postClientsToServer } from '@/api/postClientsToServer';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import StyledScrollBar from '../common/StyledScrollbar/StyledScrollbar';
 
@@ -19,6 +19,7 @@ import ControlledField from './ControlledField';
 
 //validation rules
 import { clientFormRules } from './clientFormValidationRules';
+import { QUERY_KEY_CLIENTS_DATA } from '@/utils/queryDatas';
 
 //
 const defaultValues: AddClientFormData = {
@@ -49,14 +50,15 @@ const ClientsAddForm = () => {
   } = useForm<AddClientFormData>({
     defaultValues
   });
-
-  console.log(errors)
-
+  //инициализируем useFieldArray для динамических полей
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'notes', // массив данных
   });
-  console.log(fields)
+
+  //квери клиент для инвалидации списка клиентов
+  const queryClient = useQueryClient()
+
   // Мутация для отправки данных с использованием поста на сервер
   const mutation = useMutation({
     mutationFn: (data: AddClientFormData) => postClientsToServer(data), //функция отправки на сервер /api/postClientsToServer
@@ -67,6 +69,7 @@ const ClientsAddForm = () => {
       setResponseMessage(`Данные успешно отправлены!`);
       // Сброс формы после успешной отправки но нужно сделать у перечисляющих полей значение, чтобы не было ошибки undefined
       reset(defaultValues);
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY_CLIENTS_DATA })
     },
     onError: (error) => {
       console.log(error)
