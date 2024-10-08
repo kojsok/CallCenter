@@ -8,6 +8,7 @@ import ClientCard from "@/components/ClientCard/ClientCard";
 import WhatshotOutlinedIcon from '@mui/icons-material/WhatshotOutlined';
 import DoNotDisturbOnOutlinedIcon from '@mui/icons-material/DoNotDisturbOnOutlined';
 import PriorityHighOutlinedIcon from '@mui/icons-material/PriorityHighOutlined';
+import ClientsForm from "@/components/ClientsAddForm/ClientsForm";
 
 export interface FilterItem {
   textContent: string, icon: React.ReactNode, divider: boolean
@@ -67,8 +68,8 @@ const Clients = () => {
           >
             <ClientList />
           </Box>
-          <Box>
-            <ClientCard />
+          <Box className="lg:p-6">
+            <ClientsForm />
           </Box>
         </Box>
       </Box>

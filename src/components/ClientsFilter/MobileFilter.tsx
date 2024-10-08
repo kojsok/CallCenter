@@ -34,9 +34,9 @@ const MobileFilter: FC<MobileFilterProps> = ({ filterInner }) => {
         }}
         sx={{
           "& .MuiMenu-paper": {
-            backgroundColor: "#1455967d",
+            backgroundColor: "var(--secondaryBg05)",
             color: "var(--textApp)",
-            backdropFilter: 'blur(5px)',
+            backdropFilter: 'blur(10px)',
             translate: "-50%"
           },
           "& .MuiMenuItem-divider": {

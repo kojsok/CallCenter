@@ -23,11 +23,19 @@
   --textApp: var(--light);
   --appBg: #000319;
   --text-second: #7c8fac;
+  --dateFilter: 0.8
 }
+
 
 .theme-light {
   --textApp: black;
   --appBg: white;
+  --dateFilter: 0;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(var(--dateFilter));
 }
 
 body {

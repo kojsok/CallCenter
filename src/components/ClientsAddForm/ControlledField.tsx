@@ -13,6 +13,7 @@ interface ControlledFieldProps {
 // и `fieldProps` для настройки TextField из Material-UI.
 
 const ControlledField: FC<ControlledFieldProps> = ({ controllerProps, fieldProps }) => {
+  console.log(controllerProps)
   return (
     <Controller
       {...controllerProps}
@@ -20,9 +21,59 @@ const ControlledField: FC<ControlledFieldProps> = ({ controllerProps, fieldProps
         <TextField
           {...field}
           {...fieldProps}
-          variant="outlined"
+          variant='standard'
           margin="normal"
           fullWidth
+          slotProps={{
+            input: {
+              sx: {
+                boxShadow: ' inset 1px 1px 3px 1px rgba(0,0,0,0.75)',
+                color: 'var(--textApp)',
+                fontSize: '0.8rem',
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "var(--light)",
+                },
+                "&.Mui-focused, &:hover:not(.Mui-focused)": {
+                  '.MuiOutlinedInput-notchedOutline': {
+                    borderWidth: '2px',
+                    borderColor: "var(--primary-main)"
+                  }
+                },
+
+              }
+            },
+            htmlInput: {
+              sx: {
+                p: '10px 10px',
+                backgroundColor: 'var(--secondaryBg05)'
+              }
+            },
+            inputLabel: {
+              shrink: true,
+              sx: {
+                top: '-10px',
+                fontSize: '1.2rem',
+                color: "var(--text-second)"
+              }
+            },
+            select: {
+              sx: {
+                color: 'var(--textApp)',
+                "& .MuiSelect-icon": {
+                  color: 'var(--light)'
+                }
+              },
+              MenuProps: {
+                sx: {
+                  "& .MuiMenu-paper": {
+                    backgroundColor: "var(--secondaryBg05)",
+                    color: "var(--textApp)",
+                    backdropFilter: 'blur(10px)',
+                  }
+                }
+              }
+            }
+          }}
         >{fieldProps.children}</TextField>
       )}
     />

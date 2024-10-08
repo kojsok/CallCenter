@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   Button,
-  Container,
   Typography,
   MenuItem,
   Box,
@@ -30,7 +29,7 @@ const defaultValues: AddClientFormData = {
   },
   notes: ['dkdkkkdd'],
   interactionsCount: 0,
-  lastInteractionDate: new Date().toISOString(),
+  lastInteractionDate: new Date().toLocaleDateString('en-CA'),
   status: 'new',
 }
 
@@ -77,154 +76,172 @@ const ClientsAddForm = () => {
   };
 
   return (
-    <Container
-      maxWidth="sm"
-      sx={{
-        mt: 4,
-        backgroundColor: 'white',
-        p: 4,
-        borderRadius: '8px',
-        boxShadow: 3,
-      }}
-    >
-      <Typography variant="h4" gutterBottom>
-        Add clients
+    <Box className="h-full rounded-2xl xs:border-2 xs:border-primary-light lg:border-transparent">
+      <Typography variant="h4" gutterBottom sx={{ mb: '30px', fontSize: "1.5rem", color: "var(--textApp)" }}>
+        Add client
       </Typography>
       {/* Используем handleSubmit из react-hook-form для обработки отправки формы */}
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
         {/* Используем обертку ControlledField*/}
-        <ControlledField
-          controllerProps={{
-            control,
-            name: 'firstName',
-            rules: clientFormRules.firstName //правило из объекта 
-          }}
-          fieldProps={{
-            label: 'Имя',
-            required: true,
-            error: !!errors.firstName,// Показываем ошибку, если есть
-            helperText: errors.firstName?.message // Текст ошибки
-          }}
-        />
-        <ControlledField
-          controllerProps={{
-            control,
-            name: "lastName",
-            rules: clientFormRules.lastName
-          }}
-          fieldProps={{
-            label: "Фамилия",
-            error: !!errors.lastName,
-            helperText: errors.lastName?.message,
-          }}
-        />
+        <Box className="flex gap-6">
+          <ControlledField
+            controllerProps={{
+              control,
+              name: 'firstName',
+              rules: clientFormRules.firstName //правило из объекта 
+            }}
+            fieldProps={{
+              label: 'First Name',
+              required: true,
+              error: !!errors.firstName,// Показываем ошибку, если есть
+              helperText: errors.firstName?.message // Текст ошибки
+            }}
+          />
+          <ControlledField
+            controllerProps={{
+              control,
+              name: "lastName",
+              rules: clientFormRules.lastName
+            }}
+            fieldProps={{
+              label: "Last Name",
+              required: true,
+              error: !!errors.lastName,
+              helperText: errors.lastName?.message,
+            }}
+          />
+        </Box>
+        <Box className="flex gap-6">
+          <ControlledField
+            controllerProps={{
+              control,
+              name: "contacts.phone",
+              rules: clientFormRules['contacts.phone']
+            }}
+            fieldProps={{
+              label: "Phone",
+              required: true,
+              error: !!errors.contacts?.phone,
+              type: 'tel',
+              helperText: errors.contacts?.phone?.message,
+            }}
+          />
+          <ControlledField
+            controllerProps={{
+              control,
+              name: "contacts.email",
+              rules: clientFormRules["contacts.email"]
+            }}
+            fieldProps={{
+              label: "Email",
+              required: true,
+              error: !!errors.contacts?.email,
+              type: 'email',
+              helperText: errors.contacts?.email?.message,
+            }}
+          />
+        </Box>
 
-        <ControlledField
-          controllerProps={{
-            control,
-            name: "age",
-            rules: clientFormRules.age
-          }}
-          fieldProps={{
-            label: "Возраст",
-            error: !!errors.age,
-            type: 'number',
-            helperText: errors.age?.message,
-          }}
-        />
-        <ControlledField
-          controllerProps={{
-            control,
-            name: "gender",
-            rules: clientFormRules.gender
-          }}
-          fieldProps={{
-            label: "Gender",
-            error: !!errors.gender,
-            select: true,
-            helperText: errors.gender?.message,
-            children: [<MenuItem key="female" value="female">Female</MenuItem>,
-            <MenuItem key="male" value="male">Male</MenuItem>]
+        <Box className="flex gap-6">
+          <ControlledField
+            controllerProps={{
+              control,
+              name: "age",
+              rules: clientFormRules.age
+            }}
+            fieldProps={{
+              label: "Возраст",
+              required: true,
+              error: !!errors.age,
+              type: 'number',
+              helperText: errors.age?.message,
+            }}
+          />
+          <ControlledField
+            controllerProps={{
+              control,
+              name: "gender",
+              rules: clientFormRules.gender
+            }}
+            fieldProps={{
+              label: "Gender",
+              error: !!errors.gender,
+              select: true,
+              helperText: errors.gender?.message,
+              children: [<MenuItem key="female" value="female">Female</MenuItem>,
+              <MenuItem key="male" value="male">Male</MenuItem>]
 
-          }}
-        />
-        <ControlledField
-          controllerProps={{
-            control,
-            name: "image",
-            rules: clientFormRules.image
-          }}
-          fieldProps={{
-            label: "Avatar Url",
-            error: !!errors.image,
-            type: 'url',
-            helperText: errors.image?.message,
-          }}
-        />
-        <ControlledField
-          controllerProps={{
-            control,
-            name: "contacts.phone",
-            rules: clientFormRules['contacts.phone']
-          }}
-          fieldProps={{
-            label: "Phone",
-            error: !!errors.contacts?.phone,
-            type: 'tel',
-            helperText: errors.contacts?.phone?.message,
-          }}
-        />
-        <ControlledField
-          controllerProps={{
-            control,
-            name: "contacts.email",
-            rules: clientFormRules["contacts.email"]
-          }}
-          fieldProps={{
-            label: "Email",
-            error: !!errors.contacts?.email,
-            type: 'email',
-            helperText: errors.contacts?.email?.message,
-          }}
-        />
-        <ControlledField
-          controllerProps={{
-            control,
-            name: "lastInteractionDate",
-            rules: clientFormRules.lastInteractionDate
-          }}
-          fieldProps={{
-            label: "Last interaction",
-            type: 'date',
-          }}
-        />
-        <ControlledField
-          controllerProps={{
-            control,
-            name: "status",
-            rules: clientFormRules.status
-          }}
-          fieldProps={{
-            label: "Status",
-            error: !!errors.status,
-            helperText: errors.status?.message,
-            select: true,
-            children: [
-              <MenuItem key="VIP" value="VIP">VIP</MenuItem>,
-              <MenuItem key="active" value="active">Active</MenuItem>,
-              <MenuItem key="new" value="new">New</MenuItem>,
-              <MenuItem key="problematic" value="problematic">Particular</MenuItem>,
-              <MenuItem key="inactive" value="inactive">Inactive</MenuItem>,
-            ]
-          }}
-        />
+            }}
+          />
+          <ControlledField
+            controllerProps={{
+              control,
+              name: "status",
+              rules: clientFormRules.status
+            }}
+            fieldProps={{
+              label: "Status",
+              error: !!errors.status,
+              helperText: errors.status?.message,
+              select: true,
+              children: [
+                <MenuItem key="VIP" value="VIP">VIP</MenuItem>,
+                <MenuItem key="active" value="active">Active</MenuItem>,
+                <MenuItem key="new" value="new">New</MenuItem>,
+                <MenuItem key="problematic" value="problematic">Particular</MenuItem>,
+                <MenuItem key="inactive" value="inactive">Inactive</MenuItem>,
+              ]
+            }}
+          />
+
+        </Box>
+
+        <Box className="flex gap-6">
+          <ControlledField
+            controllerProps={{
+              control,
+              name: "image",
+              rules: clientFormRules.image
+            }}
+            fieldProps={{
+              required: true,
+              label: "Avatar Url",
+              type: 'url',
+              error: !!errors.image,
+              helperText: errors.image?.message,
+            }}
+          />
+
+          <ControlledField
+            controllerProps={{
+              control,
+              name: "lastInteractionDate",
+              rules: clientFormRules.lastInteractionDate
+            }}
+            fieldProps={{
+              label: "Last interaction",
+              type: 'date',
+              sx: {
+                width: "45%"
+              }
+            }}
+          />
+        </Box>
+
 
         <Button
+          sx={{
+            textTransform: "capitalize",
+            borderRadius: '10px',
+            py: {
+              xs: "5px", lg: "10px"
+            },
+            mt: '30px'
+          }}
+          className="bg-gradient-to-r self-start from-primary-main to-primary-dark hover:brightness-110"
+
           type="submit"
           variant="contained"
-          color="primary"
-          fullWidth
-          sx={{ mt: 2 }}
           disabled={mutation.isPending} // Обновлено свойство для отслеживания состояния мутации
         >
           {mutation.isPending ? 'Отправка...' : 'Отправить'}
@@ -253,7 +270,7 @@ const ClientsAddForm = () => {
         )}
         {mutation.isSuccess && <Typography color="success.main">Form submitted successfully!</Typography>}
       </Box>
-    </Container>
+    </Box>
   );
 };
 
