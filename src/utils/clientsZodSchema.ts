@@ -22,9 +22,8 @@ export const clientSchema = z.object({
   }),
   image: z.string().url({ message: "Неверный URL изображения" }),
   contacts: contactsSchema,
-  notes: z
-    .array(z.string())
-    .min(1, { message: "Должен быть хотя бы один комментарий." }),
+  notes: z.array(z.string()),
+  // .min(1, { message: "Должен быть хотя бы один комментарий." }),
   interactionsCount: z.number().int().nonnegative({
     message: "Количество взаимедействий должно быть положительным целым числом",
   }),

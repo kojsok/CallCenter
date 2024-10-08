@@ -4,18 +4,21 @@ import {
   Typography,
   MenuItem,
   Box,
+  IconButton,
 } from '@mui/material';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { postClientsToServer } from '@/api/postClientsToServer';
 import { useMutation } from '@tanstack/react-query';
 
+import StyledScrollBar from '../common/StyledScrollbar/StyledScrollbar';
+
 // Импортируем необходимые хуки и функции из react-hook-form
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { AddClientFormData } from '@/utils/clientsZodSchema';
 import ControlledField from './ControlledField';
 
 //validation rules
 import { clientFormRules } from './clientFormValidationRules';
-import StyledScrollBar from '../common/StyledScrollbar/StyledScrollbar';
 
 //
 const defaultValues: AddClientFormData = {
@@ -28,7 +31,7 @@ const defaultValues: AddClientFormData = {
     phone: '',
     email: '',
   },
-  notes: ['dkdkkkdd'],
+  notes: [],
   interactionsCount: 0,
   lastInteractionDate: new Date().toLocaleDateString('en-CA'),
   status: 'new',
@@ -47,6 +50,13 @@ const ClientsAddForm = () => {
     defaultValues
   });
 
+  console.log(errors)
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'notes', // массив данных
+  });
+  console.log(fields)
   // Мутация для отправки данных с использованием поста на сервер
   const mutation = useMutation({
     mutationFn: (data: AddClientFormData) => postClientsToServer(data), //функция отправки на сервер /api/postClientsToServer
@@ -83,7 +93,7 @@ const ClientsAddForm = () => {
           Add client
         </Typography>
         {/* Используем handleSubmit из react-hook-form для обработки отправки формы */}
-        <form className='clientForm' noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+        <form className='clientForm flex flex-col gap-6' noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
           {/* Используем обертку ControlledField*/}
           <Box className="flex gap-6 fieldGroup">
             <ControlledField
@@ -137,8 +147,8 @@ const ClientsAddForm = () => {
               fieldProps={{
                 label: "Email",
                 required: true,
-                error: !!errors.contacts?.email,
                 type: 'email',
+                error: !!errors.contacts?.email,
                 helperText: errors.contacts?.email?.message,
               }}
             />
@@ -230,7 +240,38 @@ const ClientsAddForm = () => {
             />
           </Box>
 
+          {/* notes fields, dynamic */}
+          {fields.map((field, index) => (
+            <Box key={field.id} className="flex gap-2 items-center relative">
+              <ControlledField
+                controllerProps={{
+                  control,
+                  name: `notes.${index}`,
+                  rules: clientFormRules.notes
+                }}
+                fieldProps={{
+                  label: `Note ${index + 1}`,
+                  multiline: true,
+                  fullWidth: true,
+                  error: !!errors.notes?.[index],
+                  helperText: errors.notes?.[index]?.message,
+                }}
+              />
+              <IconButton onClick={() => remove(index)} sx={{ mt: '12px', color: 'var(--error)' }}>
+                <DeleteOutlineIcon />
+              </IconButton>
+            </Box>
+          ))}
 
+          {/* Add note button */}
+          <Button
+            onClick={() => append('')}
+            sx={{ textTransform: 'capitalize', textDecoration: 'underline', textUnderlineOffset: '5px', color: 'var(--primary-main)', p: 0 }}
+          >
+            Добавить заметку
+          </Button>
+
+          {/* Submit button */}
           <Button
             sx={{
               textTransform: "capitalize",
@@ -238,8 +279,7 @@ const ClientsAddForm = () => {
               py: {
                 xs: "5px", lg: "10px"
               },
-              mt: '30px',
-              minWidth: '100px'
+              minWidth: '120px'
             }}
             className="bg-gradient-to-r self-start from-primary-main to-primary-dark hover:brightness-110"
 
@@ -250,6 +290,8 @@ const ClientsAddForm = () => {
             {mutation.isPending ? 'Sending...' : 'Send'}
           </Button>
         </form>
+
+        {/* Response result notification */}
         {responseMessage && (
           <Typography
             variant="body1"

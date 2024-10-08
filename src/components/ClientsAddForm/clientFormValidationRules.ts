@@ -40,4 +40,5 @@ export const clientFormRules = {
   },
   lastInteractionDate: {},
   status: { required: "Статус обязателен" },
+  notes: { required: "Поле заметки не может быть пустым" },
 };

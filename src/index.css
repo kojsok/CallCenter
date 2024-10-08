@@ -18,6 +18,8 @@
   --primary-light: #1455967d;
   --primary-dark: #6366f1;
   --light: #ebedf1;
+  --error: #c24122;
+  --success: #23a516;
 
   /* theme vars */
   --textApp: var(--light);

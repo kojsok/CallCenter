@@ -21,7 +21,7 @@ const ControlledField: FC<ControlledFieldProps> = ({ controllerProps, fieldProps
           {...field}
           {...fieldProps}
           variant='standard'
-          margin="normal"
+          // margin="normal"
           fullWidth
           slotProps={{
             input: {
@@ -50,7 +50,7 @@ const ControlledField: FC<ControlledFieldProps> = ({ controllerProps, fieldProps
                 "&.Mui-focused": {
                   color: "var(--primary-main)"
                 },
-                top: '-10px',
+                top: '-7px',
                 fontSize: '1.2rem',
                 color: "var(--text-second)"
               }
