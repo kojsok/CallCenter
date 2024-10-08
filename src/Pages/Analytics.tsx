@@ -1,5 +1,6 @@
-import ClientsAddForm from "@/components/ClientsAddForm/ClientsAddForm";
-import ClientsComponent from "@/store/howtouseit/ClientsComponent";
+import ClientsForm from "@/components/ClientsAddForm/ClientsForm";
+// import ClientsAddForm2 from "@/components/ClientsAddForm/ClientsAddForm2";
+// import ClientsComponent from "@/store/howtouseit/ClientsComponent";
 import { Box } from "@mui/material";
 
 const Analytics = () => {
@@ -7,8 +8,8 @@ const Analytics = () => {
     <Box>
       <h1 className="text-app">Analytics page 111</h1>
 
-      <ClientsAddForm />
-      <ClientsComponent />
+      <ClientsForm />
+      {/* <ClientsComponent /> */}
     </Box>
   );
 }
