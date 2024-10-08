@@ -13,7 +13,6 @@ interface ControlledFieldProps {
 // и `fieldProps` для настройки TextField из Material-UI.
 
 const ControlledField: FC<ControlledFieldProps> = ({ controllerProps, fieldProps }) => {
-  console.log(controllerProps)
   return (
     <Controller
       {...controllerProps}
@@ -30,11 +29,8 @@ const ControlledField: FC<ControlledFieldProps> = ({ controllerProps, fieldProps
                 boxShadow: ' inset 1px 1px 3px 1px rgba(0,0,0,0.75)',
                 color: 'var(--textApp)',
                 fontSize: '0.8rem',
-                "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "var(--light)",
-                },
                 "&.Mui-focused, &:hover:not(.Mui-focused)": {
-                  '.MuiOutlinedInput-notchedOutline': {
+                  '&::after': {
                     borderWidth: '2px',
                     borderColor: "var(--primary-main)"
                   }
@@ -51,6 +47,9 @@ const ControlledField: FC<ControlledFieldProps> = ({ controllerProps, fieldProps
             inputLabel: {
               shrink: true,
               sx: {
+                "&.Mui-focused": {
+                  color: "var(--primary-main)"
+                },
                 top: '-10px',
                 fontSize: '1.2rem',
                 color: "var(--text-second)"

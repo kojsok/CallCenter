@@ -41,3 +41,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 body {
   @apply bg-appBg;
 }
+
+/*@container media query for client form responsiveness*/
+.clientForm {
+  container-type: inline-size;
+}
+
+@container (width < 360px) {
+  .fieldGroup {
+    flex-wrap: wrap;
+  }
+}
