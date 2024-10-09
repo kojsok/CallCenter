@@ -3,10 +3,17 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import StarTwoToneIcon from '@mui/icons-material/StarTwoTone';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 //temp
-import { clients } from "./clients";
+// import { clients } from "./clients";
 import StyledScrollBar from "../common/StyledScrollbar/StyledScrollbar";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEY_CLIENTS_DATA } from "@/utils/queryDatas";
+import { getClientsAxios } from "@/api/fetchClients";
 
 const ClientList = () => {
+  const { data: clients } = useQuery({
+    queryKey: QUERY_KEY_CLIENTS_DATA,
+    queryFn: getClientsAxios
+  })
   return (
     <Box className="flex h-full flex-col gap-5 rounded-2xl xs:border-2 xs:border-primary-light xs:p-4 lg:border-transparent lg:p-0">
       <TextField
@@ -45,7 +52,7 @@ const ClientList = () => {
       />
       <StyledScrollBar>
         <List>
-          {clients.map((client, index) => {
+          {clients?.map((client, index) => {
             const clientFullName = `${client.firstName} ${client.lastName}`
             const isNotLastEl = index !== clients.length - 1;
             const isStarred = client.status === 'VIP' || client.status === 'active'

@@ -18,18 +18,39 @@
   --primary-light: #1455967d;
   --primary-dark: #6366f1;
   --light: #ebedf1;
+  --error: #c24122;
+  --success: #23a516;
 
   /* theme vars */
   --textApp: var(--light);
   --appBg: #000319;
   --text-second: #7c8fac;
+  --dateFilter: 0.8
 }
+
 
 .theme-light {
   --textApp: black;
   --appBg: white;
+  --dateFilter: 0;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(var(--dateFilter));
 }
 
 body {
   @apply bg-appBg;
+}
+
+/*@container media query for client form responsiveness*/
+.clientForm {
+  container-type: inline-size;
+}
+
+@container (width < 360px) {
+  .fieldGroup {
+    flex-wrap: wrap;
+  }
 }

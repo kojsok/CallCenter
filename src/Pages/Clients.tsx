@@ -4,10 +4,11 @@ import PageHeader from "@/components/PageHeader/PageHeader";
 import { Box, Container } from "@mui/material";
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import StarBorderPurple500Icon from '@mui/icons-material/StarBorderPurple500';
-import ClientCard from "@/components/ClientCard/ClientCard";
+// import ClientCard from "@/components/ClientCard/ClientCard";
 import WhatshotOutlinedIcon from '@mui/icons-material/WhatshotOutlined';
 import DoNotDisturbOnOutlinedIcon from '@mui/icons-material/DoNotDisturbOnOutlined';
 import PriorityHighOutlinedIcon from '@mui/icons-material/PriorityHighOutlined';
+import ClientsForm from "@/components/ClientsForm/ClientsForm";
 
 export interface FilterItem {
   textContent: string, icon: React.ReactNode, divider: boolean
@@ -59,7 +60,6 @@ const Clients = () => {
           </Box>
           <Box
             className="
-            h-full
             lg:p-6
             lg:row-span-2 
             lg:border-r-2 
@@ -67,8 +67,8 @@ const Clients = () => {
           >
             <ClientList />
           </Box>
-          <Box>
-            <ClientCard />
+          <Box className="lg:p-6 lg:row-span-2">
+            <ClientsForm />
           </Box>
         </Box>
       </Box>
