@@ -1,4 +1,4 @@
-import ClientsAddForm from "@/components/ClientsForm/ClientsForm";
+import ClientsAddForm from "@/components/ClientsForm/ClientsAddForm";
 import ClientsComponent from "@/store/howtouseit/ClientsComponent";
 import { Box } from "@mui/material";
 
