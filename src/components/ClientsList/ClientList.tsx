@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectFilters, setFilters, changeActiveClientId } from "@/store/clientsSlices/clientsSlice";
 import { useEffect, useRef } from "react";
 import { getClientsAxios, deleteClient } from "@/api/clientsApi";
-import { ClientReceivingData } from "@/utils/clientsZodSchema";
+import { ClientReceivingData } from "@/utils/schemasTypes";
 
 const ClientList = () => {
   //хуки стора
@@ -113,7 +113,7 @@ const ClientList = () => {
           {clients?.map((client, index) => {
             const clientFullName = `${client.firstName} ${client.lastName}`
             const isNotLastEl = index !== clients.length - 1;
-            const isStarred = client.status === 'VIP' || client.status === 'active'
+            const isStarred = client.status === 'VIP'
             return (
               <ListItem
                 onClick={handleItemClick(client)}

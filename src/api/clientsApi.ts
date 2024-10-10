@@ -1,13 +1,12 @@
-import {
-  AddClientFormData,
-  ClientReceivingData,
-  Clients,
-  clientSchema,
-  clientsSchema,
-} from "@/utils/clientsZodSchema";
+import { clientSchema, clientsSchema } from "@/utils/clientsZodSchema";
 
 import { Api, handleError } from "./Api";
 import { FilterQueryParams } from "@/utils/commonTypes";
+import {
+  Clients,
+  ClientReceivingData,
+  AddClientFormData,
+} from "@/utils/schemasTypes";
 
 //аргумент params добавляется к запросу фильтрации
 //get запрос всех клиентов

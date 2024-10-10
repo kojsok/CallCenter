@@ -14,12 +14,12 @@ import StyledScrollBar from '../common/StyledScrollbar/StyledScrollbar';
 
 // Импортируем необходимые хуки и функции из react-hook-form
 import { useFieldArray, useForm } from 'react-hook-form';
-import { AddClientFormData } from '@/utils/clientsZodSchema';
 import ControlledField from './ControlledField';
 
 //validation rules
 import { clientFormRules } from './clientFormValidationRules';
 import { QUERY_KEY_CLIENTS_DATA } from '@/api/queryDatas';
+import { AddClientFormData } from '@/utils/schemasTypes';
 
 //
 const defaultValues: AddClientFormData = {

@@ -1,6 +1,6 @@
 import { getClientsAxios } from "@/api/clientsApi";
-import { Clients } from "@/utils/clientsZodSchema";
 import { QUERY_KEY_CLIENTS_DATA, queryClient } from "@/api/queryDatas";
+import { Clients } from "@/utils/schemasTypes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
