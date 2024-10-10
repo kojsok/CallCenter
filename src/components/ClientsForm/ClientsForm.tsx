@@ -7,7 +7,7 @@ import {
   IconButton,
 } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { postClientsToServer } from '@/api/postClientsToServer';
+import { postClientsToServer } from '@/api/clientsApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import StyledScrollBar from '../common/StyledScrollbar/StyledScrollbar';
@@ -19,7 +19,7 @@ import ControlledField from './ControlledField';
 
 //validation rules
 import { clientFormRules } from './clientFormValidationRules';
-import { QUERY_KEY_CLIENTS_DATA } from '@/utils/queryDatas';
+import { QUERY_KEY_CLIENTS_DATA } from '@/api/queryDatas';
 
 //
 const defaultValues: AddClientFormData = {

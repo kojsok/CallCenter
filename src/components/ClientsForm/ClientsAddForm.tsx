@@ -8,7 +8,7 @@ import {
   Box,
 } from '@mui/material';
 // import { IClients } from '@/services/IClients'; // Импортируем тип данных
-import { postClientsToServer } from '@/api/postClientsToServer';
+import { postClientsToServer } from '@/api/clientsApi';
 import { useMutation } from '@tanstack/react-query';
 import { v4 as uuidv4 } from 'uuid';
 // Импортируем необходимые хуки и функции из react-hook-form
