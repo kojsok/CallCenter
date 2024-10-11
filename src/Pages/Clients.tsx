@@ -1,7 +1,7 @@
 import ClientsFilter from "@/components/ClientsFilter/ClientsFilter";
 import ClientList from "@/components/ClientsList/ClientList";
 import PageHeader from "@/components/PageHeader/PageHeader";
-import { Box, Container } from "@mui/material";
+import { Box, Container, Drawer } from "@mui/material";
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import StarBorderPurple500Icon from '@mui/icons-material/StarBorderPurple500';
 // import ClientCard from "@/components/ClientCard/ClientCard";
@@ -12,6 +12,9 @@ import ClientsForm from "@/components/ClientsForm/ClientsForm";
 import { useDispatch } from "react-redux";
 import { setFilters } from "@/store/clientsSlices/clientsSlice";
 import { ClientStatus } from "@/utils/schemasTypes";
+import ClientCard from "@/components/ClientCard/ClientCard";
+import { relative } from "path";
+import ClientViewContainer from "@/components/ClientViewContainer/ClientViewContainer";
 
 export interface FilterItem {
   textContent: string, icon: React.ReactNode, divider: boolean, onClick: () => void
@@ -76,7 +79,9 @@ const Clients = () => {
             <ClientList />
           </Box>
           <Box className="lg:p-6 lg:row-span-2">
-            <ClientsForm />
+            <ClientViewContainer />
+            {/* <ClientCard /> */}
+            {/* <ClientsForm formType={"add-form"} /> */}
           </Box>
         </Box>
       </Box>

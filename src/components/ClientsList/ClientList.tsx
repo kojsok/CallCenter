@@ -3,49 +3,26 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import StarTwoToneIcon from '@mui/icons-material/StarTwoTone';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import StyledScrollBar from "../common/StyledScrollbar/StyledScrollbar";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEY_CLIENTS_DATA } from "@/api/queryDatas";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 //импорт из clientsSlice
-import { selectFilters, setFilters, changeActiveClientId } from "@/store/clientsSlices/clientsSlice";
-import { useEffect, useRef } from "react";
-import { getClientsAxios, deleteClient } from "@/api/clientsApi";
+import { setFilters, changeActiveClientId } from "@/store/clientsSlices/clientsSlice";
+import { useRef } from "react";
+import { getClientsAxios } from "@/api/clientsApi";
 import { ClientReceivingData } from "@/utils/schemasTypes";
+import { useDeleteClient } from "@/hooks/useDeleteClient";
 
 const ClientList = () => {
+  const { launchClientDeleting, filters } = useDeleteClient()
   //хуки стора
-  const filters = useSelector(selectFilters)
   const dispatch = useDispatch()
-
 
   //в queryKey добавляем filters, теперь при их изменении реакт квери будет инициировать новый запрос, и не нужно инвалидировать запросы вручную используя queryClient.invalidateQueries
   const { data: clients } = useQuery({
     queryKey: [...QUERY_KEY_CLIENTS_DATA, filters],
-    queryFn: () => getClientsAxios(filters)
+    queryFn: () => getClientsAxios(filters),
   })
-
-  //мутация удаления клиента
-  const queryClient = useQueryClient()
-
-  const mutation = useMutation({
-    mutationFn: deleteClient,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [...QUERY_KEY_CLIENTS_DATA, filters] })
-    },
-    onError: (error) => {
-      console.log(error)
-    }
-  })
-  //назначаем первого клиента в списке активным. так как его карточка будет автоматически открыта при перерисовке списка клиентов
-  useEffect(() => {
-    const payload: { id: null | string } = {
-      id: null
-    }
-    if (clients?.length) {
-      payload.id = clients[0].id
-    }
-    dispatch(changeActiveClientId(payload))
-  }, [clients, dispatch])
 
   //используем реф для задержки фильтрации
   const debounceRef = useRef<NodeJS.Timeout | null>(null)
@@ -60,14 +37,10 @@ const ClientList = () => {
       dispatch(setFilters(isValue ? { q: value } : {}))
     }, 200)
   }
-
-  //обработчик удаления клиента
-  const handleDeleteClient = (id: string) => {
-    mutation.mutate(id)
-  }
   // обработчик клика по элементу списка (использовано каррирование)
   const handleItemClick = (client: ClientReceivingData) => () => {
-    dispatch(changeActiveClientId({ id: client.id }))
+    // изменение идентификатора активного клиента назанчит 3-му блоку состояние "client-card"
+    dispatch(changeActiveClientId(client.id))
   }
 
   return (
@@ -147,7 +120,7 @@ const ClientList = () => {
                     color: 'var(--primary-main)'
                   }
                 }}
-                  onClick={() => handleDeleteClient(client.id)}
+                  onClick={() => launchClientDeleting(client.id)}
                 >
                   <DeleteOutlinedIcon fontSize="small" />
                 </IconButton>
