@@ -57,7 +57,7 @@ export const useClientForm = (formType: "edit-form" | "add-form") => {
   //инициализируем useFieldArray для динамических полей
   const fieldsArrayReg = useFieldArray({
     control,
-    name: "notes", // массив данных
+    name: "notes", // массив данных ?? не получается типизировать!!!
   });
 
   //квери клиент для инвалидации списка клиентов

@@ -9,7 +9,7 @@ export const useClientsData = () => {
   return useQuery<Clients>(
     {
       queryKey: QUERY_KEY_CLIENTS_DATA,
-      queryFn: getClientsAxios,
+      queryFn: () => getClientsAxios(),
       staleTime: Infinity, // Данные будут считаться актуальными "бесконечно"
       // Опции запроса можно добавлять по необходимости:
       // staleTime: 1000 * 60 * 5, // Данные кэшируются на 5 минут
