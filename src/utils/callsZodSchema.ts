@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const callRecordSchema = z.object({
-    id: z.string().min(4, { message: "ID должен состоять минимум из 4 символов" }),
+    id: z.string().min(1, { message: "ID должен состоять минимум из 4 символов" }),
     type: z.enum(['outgoing', 'incoming'], {
         errorMap: () => ({ message: "Тип звонка должен быть 'outgoing' или 'incoming'" })
     }),
@@ -16,7 +16,8 @@ const callRecordSchema = z.object({
     }),
     agentComment: z.string().optional(),
     feedbackScore: z.number().min(0, { message: "FeedbackScore должно быть 0 или больше" }).max(5,  { message: "FeedbackScore должно быть 5 или меньше" }),
-    followUpRequired: z.boolean({ message: "Follow-up должен быть  boolean значение" }),
+    // followUpRequired: z.boolean({ message: "Follow-up должен быть  boolean значение" }),
+    followUpRequired: z.boolean().optional(),
     recordUrl: z.string().optional(),
     clientId: z.string().min(4, { message: "ID должен состоять минимум из 4 символов" }),
     employeeId: z.string().min(4, { message: "ID должен состоять минимум из 4 символов" }),
