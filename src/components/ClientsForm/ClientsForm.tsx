@@ -31,7 +31,7 @@ const ClientsForm: FC<ClientsFormProps> = ({ formType }) => {
 
 
   return (
-    <Box className="flex flex-col overflow-hidde h-full rounded-2xl xs:border-2 xs:border-primary-light xs:p-4 lg:border-transparent lg:p-0">
+    <Box className="flex flex-col overflow-hidden h-full rounded-2xl xs:border-2 xs:border-primary-light xs:p-4 lg:border-transparent lg:p-0">
       <StyledScrollBar>
         <Typography variant="h4" gutterBottom sx={{ mb: '30px', fontSize: "1.5rem", color: "var(--textApp)" }}>
           {isEditForm ? "Edit Client Data" : 'Add New Client'}
