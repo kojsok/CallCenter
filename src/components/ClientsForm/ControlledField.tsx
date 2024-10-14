@@ -1,4 +1,4 @@
-import { AddClientFormData } from "@/utils/clientsZodSchema";
+import { AddClientFormData } from "@/utils/schemasTypes";
 import { TextField, TextFieldProps } from "@mui/material";
 import { FC } from "react";
 import { Controller, UseControllerProps } from "react-hook-form";

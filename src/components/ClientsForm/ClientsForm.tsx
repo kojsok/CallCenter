@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC } from 'react';
 import {
   Button,
   Typography,
@@ -7,93 +7,34 @@ import {
   IconButton,
 } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { postClientsToServer } from '@/api/postClientsToServer';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
 import StyledScrollBar from '../common/StyledScrollbar/StyledScrollbar';
-
-// Импортируем необходимые хуки и функции из react-hook-form
-import { useFieldArray, useForm } from 'react-hook-form';
-import { AddClientFormData } from '@/utils/clientsZodSchema';
 import ControlledField from './ControlledField';
-
 //validation rules
 import { clientFormRules } from './clientFormValidationRules';
-import { QUERY_KEY_CLIENTS_DATA } from '@/utils/queryDatas';
-
-//
-const defaultValues: AddClientFormData = {
-  firstName: '',
-  lastName: '',
-  age: 0,
-  gender: 'male',
-  image: '',
-  contacts: {
-    phone: '',
-    email: '',
-  },
-  notes: [],
-  interactionsCount: 0,
-  lastInteractionDate: new Date().toLocaleDateString('en-CA'),
-  status: 'new',
+import { useClientForm } from '@/hooks/useClientForm';
+interface ClientsFormProps {
+  formType: 'edit-form' | 'add-form'
 }
 
-const ClientsAddForm = () => {
-  const [responseMessage, setResponseMessage] = useState('');
-
-  // Инициализируем useForm с типизацией и дефолтными значениями
+const ClientsForm: FC<ClientsFormProps> = ({ formType }) => {
   const {
-    control, // Контроллер для интеграции с MUI
-    handleSubmit, // Функция для обработки отправки формы
-    reset, // Функция для сброса формы
-    formState: { errors } // Объект с ошибками валидации
-  } = useForm<AddClientFormData>({
-    defaultValues
-  });
-  //инициализируем useFieldArray для динамических полей
-  const { fields, append, remove } = useFieldArray({
+    fieldsArrayReg,
+    handleSubmit,
     control,
-    name: 'notes', // массив данных
-  });
+    formErrors: errors,
+    responseMessage,
+    onSubmit,
+    isEditForm,
+    isSubmitting
+  } = useClientForm(formType)
+  const { fields, append, remove } = fieldsArrayReg
 
-  //квери клиент для инвалидации списка клиентов
-  const queryClient = useQueryClient()
-
-  // Мутация для отправки данных с использованием поста на сервер
-  const mutation = useMutation({
-    mutationFn: (data: AddClientFormData) => postClientsToServer(data), //функция отправки на сервер /api/postClientsToServer
-    onMutate: () => {
-      console.log('mutation started')
-    },
-    onSuccess: () => {
-      setResponseMessage(`Данные успешно отправлены!`);
-      // Сброс формы после успешной отправки но нужно сделать у перечисляющих полей значение, чтобы не было ошибки undefined
-      reset(defaultValues);
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY_CLIENTS_DATA })
-    },
-    onError: (error) => {
-      console.log(error)
-      setResponseMessage(`Произошла ошибка при отправке данных.`);
-    },
-  });
-
-  // Обработчик отправки формы через react-hook-form
-  const onSubmit = (data: AddClientFormData) => {
-    setResponseMessage(''); //делаем state пустым
-    const formattedData = {
-      ...data,
-      age: Number(data.age),
-      lastInteractionDate: new Date(data.lastInteractionDate).toISOString()
-    }
-    mutation.mutate(formattedData);
-    console.log('данные отправлены на сервер:', formattedData);
-  };
 
   return (
     <Box className="flex flex-col overflow-hidde h-full rounded-2xl xs:border-2 xs:border-primary-light xs:p-4 lg:border-transparent lg:p-0">
       <StyledScrollBar>
         <Typography variant="h4" gutterBottom sx={{ mb: '30px', fontSize: "1.5rem", color: "var(--textApp)" }}>
-          Add client
+          {isEditForm ? "Edit Client Data" : 'Add New Client'}
         </Typography>
         {/* Используем handleSubmit из react-hook-form для обработки отправки формы */}
         <form className='clientForm flex flex-col gap-6' noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
@@ -156,7 +97,6 @@ const ClientsAddForm = () => {
               }}
             />
           </Box>
-
           <Box className="flex gap-6 fieldGroup">
             <ControlledField
               controllerProps={{
@@ -210,7 +150,6 @@ const ClientsAddForm = () => {
             />
 
           </Box>
-
           <Box className="flex gap-6 fieldsGroup">
             <ControlledField
               controllerProps={{
@@ -288,9 +227,9 @@ const ClientsAddForm = () => {
 
             type="submit"
             variant="contained"
-            disabled={mutation.isPending} // Обновлено свойство для отслеживания состояния мутации
+            disabled={isSubmitting} // Обновлено свойство для отслеживания состояния мутации
           >
-            {mutation.isPending ? 'Sending...' : 'Send'}
+            {isEditForm ? (isSubmitting ? 'Saving...' : 'Save') : (isSubmitting ? 'Sending...' : 'Send')}
           </Button>
         </form>
 
@@ -308,8 +247,9 @@ const ClientsAddForm = () => {
             {responseMessage}
           </Typography>
         )}
+
+        {/* вот эту часть можно показывать во всплывающих уведомлениях
         <Box mt={2}>
-          {/* проверить пендинг или idle */}
           {mutation.status === 'pending' && <Typography color="info.main">Loading...</Typography>}
           {mutation.isError && (
             <Typography color="error.main">
@@ -317,10 +257,10 @@ const ClientsAddForm = () => {
             </Typography>
           )}
           {mutation.isSuccess && <Typography color="success.main">Form submitted successfully!</Typography>}
-        </Box>
+        </Box> */}
       </StyledScrollBar>
     </Box>
   );
 };
 
-export default ClientsAddForm;
+export default ClientsForm;

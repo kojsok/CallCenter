@@ -8,12 +8,12 @@ import {
   Box,
 } from '@mui/material';
 // import { IClients } from '@/services/IClients'; // Импортируем тип данных
-import { postClientsToServer } from '@/api/postClientsToServer';
+import { postClientsToServer } from '@/api/clientsApi';
 import { useMutation } from '@tanstack/react-query';
 import { v4 as uuidv4 } from 'uuid';
 // Импортируем необходимые хуки и функции из react-hook-form
 import { useForm, Controller } from 'react-hook-form';
-import { ClientFormData } from '@/utils/clientsZodSchema';
+import { ClientReceivingData } from '@/utils/schemasTypes';
 
 const ClientsAddForm = () => {
   // Удаляем useState для formData, так как будем использовать react-hook-form для управления формой
@@ -27,7 +27,7 @@ const ClientsAddForm = () => {
     handleSubmit, // Функция для обработки отправки формы
     reset, // Функция для сброса формы
     formState: { errors } // Объект с ошибками валидации
-  } = useForm<ClientFormData>({
+  } = useForm<ClientReceivingData>({
     defaultValues: {
       id: uuidv4(),
       firstName: 'Vasia',
@@ -51,7 +51,7 @@ const ClientsAddForm = () => {
 
   // Мутация для отправки данных с использованием поста на сервер
   const mutation = useMutation({
-    mutationFn: async (newData: ClientFormData) =>
+    mutationFn: async (newData: ClientReceivingData) =>
       await postClientsToServer(newData), //функция отправки на сервер /api/postClientsToServer
     onSuccess: () => {
       setResponseMessage(`Данные успешно отправлены!`);
@@ -81,7 +81,7 @@ const ClientsAddForm = () => {
   });
 
   // Обработчик отправки формы через react-hook-form
-  const onSubmit = (data: ClientFormData) => {
+  const onSubmit = (data: ClientReceivingData) => {
     setResponseMessage(''); //делаем state пустым
     // Обновление временных полей перед отправкой
     const dataToSubmit = {

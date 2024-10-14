@@ -8,21 +8,29 @@ import StarBorderPurple500Icon from '@mui/icons-material/StarBorderPurple500';
 import WhatshotOutlinedIcon from '@mui/icons-material/WhatshotOutlined';
 import DoNotDisturbOnOutlinedIcon from '@mui/icons-material/DoNotDisturbOnOutlined';
 import PriorityHighOutlinedIcon from '@mui/icons-material/PriorityHighOutlined';
-import ClientsForm from "@/components/ClientsForm/ClientsForm";
+import { useDispatch } from "react-redux";
+import { setFilters } from "@/store/clientsSlices/clientsSlice";
+import { ClientStatus } from "@/utils/schemasTypes";
+import ClientViewContainer from "@/components/ClientViewContainer/ClientViewContainer";
 
 export interface FilterItem {
-  textContent: string, icon: React.ReactNode, divider: boolean
+  textContent: string, icon: React.ReactNode, divider: boolean, onClick: () => void
 }
 
-const filterItemsList: FilterItem[] = [
-  { textContent: 'All', icon: <MailOutlineIcon fontSize="small" />, divider: false },
-  { textContent: 'Starred', icon: <StarBorderPurple500Icon fontSize="small" />, divider: false },
-  { textContent: 'Active', icon: <WhatshotOutlinedIcon fontSize="small" />, divider: false },
-  { textContent: 'Inactive', icon: <DoNotDisturbOnOutlinedIcon fontSize="small" />, divider: false },
-  { textContent: 'Particular', icon: <PriorityHighOutlinedIcon fontSize="small" />, divider: true },
-]
-
 const Clients = () => {
+  const dispatch = useDispatch()
+
+  //обработчик фильтра (использовано карриование)
+  const handleClick = (status?: ClientStatus) => () => dispatch(setFilters(status ? { status } : {}))
+
+  //внесла этот массив внутрь компонента, чтобы можно было добавить обработчик клика на каждую кнопку фильтра
+  const filterItemsList: FilterItem[] = [
+    { textContent: 'All', icon: <MailOutlineIcon fontSize="small" />, divider: false, onClick: handleClick() },
+    { textContent: 'Starred', icon: <StarBorderPurple500Icon fontSize="small" />, divider: false, onClick: handleClick('VIP') },
+    { textContent: 'Active', icon: <WhatshotOutlinedIcon fontSize="small" />, divider: false, onClick: handleClick('active') },
+    { textContent: 'Inactive', icon: <DoNotDisturbOnOutlinedIcon fontSize="small" />, divider: false, onClick: handleClick('inactive') },
+    { textContent: 'Particular', icon: <PriorityHighOutlinedIcon fontSize="small" />, divider: true, onClick: handleClick('problematic') },
+  ]
   return (
     <Container>
       <Box className='py-8 flex grow gap-y-8 flex-col h-[calc(100vh-65px)]'>
@@ -68,7 +76,9 @@ const Clients = () => {
             <ClientList />
           </Box>
           <Box className="lg:p-6 lg:row-span-2">
-            <ClientsForm />
+            <ClientViewContainer />
+            {/* <ClientCard /> */}
+            {/* <ClientsForm formType={"add-form"} /> */}
           </Box>
         </Box>
       </Box>

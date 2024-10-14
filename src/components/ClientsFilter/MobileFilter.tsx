@@ -49,8 +49,17 @@ const MobileFilter: FC<MobileFilterProps> = ({ filterInner }) => {
             divider={inner.divider && index !== filterInner.length - 1}
             key={inner.textContent}
             disableGutters sx={{ py: 0 }}
-            onClick={handleClose}>
-            <ListItemButton alignItems="flex-start" component={Button} className="gap-4" sx={{ textTransform: 'capitalize' }}>
+          >
+            <ListItemButton
+              onClick={() => {
+                inner.onClick();
+                handleClose()
+              }}
+              alignItems="flex-start"
+              component={Button}
+              className="gap-4"
+              sx={{ textTransform: 'capitalize' }}
+            >
               {inner.icon}
               {inner.textContent}
             </ListItemButton>

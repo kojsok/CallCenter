@@ -12,7 +12,7 @@ const DesktopFilter: FC<DesktopFilterProps> = ({ filterInner }) => {
         {filterInner.map(inner => (
           <Fragment key={inner.textContent}>
             <ListItem disableGutters disablePadding sx={{ ...inner.divider && { mb: "30px" } }}>
-              <ListItemButton alignItems="flex-start" component={Button} className="gap-4" sx={{ ":hover": { bgcolor: "var(--primary-light)" }, transition: "background-color 0.4s ease", textTransform: "capitalize" }}>
+              <ListItemButton onClick={inner.onClick} alignItems="flex-start" component={Button} className="gap-4" sx={{ ":hover": { bgcolor: "var(--primary-light)" }, transition: "background-color 0.4s ease", textTransform: "capitalize" }}>
                 {inner.icon}
                 {inner.textContent}
               </ListItemButton>

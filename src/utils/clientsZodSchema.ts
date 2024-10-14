@@ -52,10 +52,3 @@ export const addClientSchema = clientSchema.omit({
   createdAt: true,
   updatedAt: true,
 });
-
-export type Clients = z.infer<typeof clientsSchema>; // массив обьектов
-
-export type ClientReceivingData = z.infer<typeof clientSchema>; //для форм читсый обьект
-
-export type AddClientFormData = z.infer<typeof addClientSchema>; //тип объекта для отправки клиента на сервер (сервер сам добавляет поля id, createdeAt, updatedAt)
-export type EditClientFormData = Partial<AddClientFormData>;
