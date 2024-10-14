@@ -32,4 +32,8 @@ const callRecordSchema = z.object({
 
 export const callRecordsSchema = z.array(callRecordSchema);
 
+// Экспортируем тип для массива звонков
 export type CallRecords = z.infer<typeof callRecordsSchema>;
+
+// Экспортируем тип для одного звонка
+export type CallRecord = z.infer<typeof callRecordSchema>;
