@@ -25,6 +25,7 @@
   /* theme vars */
   --textApp: var(--light);
   --appBg: #000319;
+  --appBg05: rgba(0, 3, 25, 0.5);
   --text-second: #7c8fac;
   --dateFilter: 0.8
 }

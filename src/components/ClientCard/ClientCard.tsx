@@ -26,7 +26,7 @@ const ClientCard = () => {
     setTabValue(newValue)
   }
   return (
-    <Box className="flex flex-col overflow-hidden h-full rounded-2xl xs:border-2 xs:border-primary-light xs:p-4 lg:border-transparent lg:p-0">
+    <Box className="flex flex-col overflow-hidden h-full md:rounded-2xl md:border-2 md:border-primary-light md:p-4 lg:rounded-none lg:border-transparent lg:p-0">
       <StyledScrollBar>
         <Typography variant="h4" gutterBottom sx={{ mb: '20px', fontSize: "1.5rem", color: "var(--textApp)" }}>
           Client Details

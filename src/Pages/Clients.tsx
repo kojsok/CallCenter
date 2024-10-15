@@ -68,6 +68,8 @@ const Clients = () => {
           </Box>
           <Box
             className="
+            xs:col-span-2
+            md:col-span-1
             lg:p-6
             lg:row-span-2 
             lg:border-r-2 
@@ -77,8 +79,6 @@ const Clients = () => {
           </Box>
           <Box className="lg:p-6 lg:row-span-2">
             <ClientViewContainer />
-            {/* <ClientCard /> */}
-            {/* <ClientsForm formType={"add-form"} /> */}
           </Box>
         </Box>
       </Box>
