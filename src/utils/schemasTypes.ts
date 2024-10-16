@@ -7,6 +7,8 @@ import {
 import {
   authDataSchema,
   empolyeeDataSchema,
+  loginResponseSchema,
+  loginSchema,
   profileSchema,
 } from "./authZodSchemas";
 
@@ -24,3 +26,5 @@ export type ClientStatus = z.infer<typeof clientSchema.shape.status>;
 export type Profile = z.infer<typeof profileSchema>;
 export type AuthData = z.infer<typeof authDataSchema>;
 export type EmployeeData = z.infer<typeof empolyeeDataSchema>;
+export type LoginSchema = z.infer<typeof loginSchema>;
+export type LoginResponse = z.infer<typeof loginResponseSchema>;

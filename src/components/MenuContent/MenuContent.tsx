@@ -11,6 +11,8 @@ import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { NavLink } from 'react-router-dom';
 
 import { Divider } from '@mui/material';
@@ -20,6 +22,16 @@ const mainListItems = [
     text: 'Home',
     path: '/',
     icon: <HomeRoundedIcon className='text-app' />
+  },
+  {
+    text: 'Profile',
+    path: 'profile',
+    icon: <AccountBoxIcon className='text-app' />
+  },
+  {
+    text: 'Admin Panel',
+    path: 'adminpanel',
+    icon: <AdminPanelSettingsIcon className='text-app' />
   },
   {
     text: 'Analytics',
