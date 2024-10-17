@@ -1,93 +1,112 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Box } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
-import { People, Call, AccessTime, MoodBad, Comment, Feedback } from '@mui/icons-material';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/store/store';
+import { People, Call, AccessTime, MoodBad, Feedback } from '@mui/icons-material';
+import { fetchCallsData } from '@/store/callSlice';
 
 const CallAnaliticsCardOne: FC = () => {
-  // Получение данных о звонках из состояния
+  const dispatch = useDispatch<AppDispatch>();
   const calls = useSelector((state: RootState) => state.calls.data);
+  const status = useSelector((state: RootState) => state.calls.status);
+  const error = useSelector((state: RootState) => state.calls.error); //нужно добавить работу с ошибкой
 
-  // Если звонки есть, берем первый элемент
   const firstCall = calls.length > 0 ? calls[0] : null;
-
-  // Подсчет общей продолжительности всех звонков
   const totalDuration = calls.reduce((acc, call) => acc + call.duration, 0);
-
-  // Анализ настроения звонков
   const negativeCalls = calls.filter(call => call.callMood === 'negative').length;
-
-  // Подсчет количества звонков, требующих дальнейших действий
   const followUpCalls = calls.filter(call => call.followUpRequired).length;
+
+  // Локальное состояние для Snackbar
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+
+   // Получение данных при монтировании компонента
+   useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchCallsData());
+    }
+  }, [status, dispatch]);
+
+  // Открытие Snackbar при ошибке доделать сам snackbar
+  useEffect(() => {
+    if (status === 'failed') {
+      setOpenSnackbar(true);
+    }
+  }, [status]);
 
   return (
     <Card sx={{
-      maxWidth: 445, 
-      maxHeight: 345, 
+      width: '100%', // Занимает всю доступную ширину родительского контейнера
+      maxWidth: '500px', // Ограничение максимальной ширины
+      height: '100%',
+      maxHeight: '345px',
+      // aspectRatio: '1 / 1', // Задает соотношение сторон (ширина к высоте)
+      display: 'flex', // Flexbox для контроля содержимого внутри
+      flexDirection: 'column',
+      justifyContent: 'space-between',
       margin: 'auto', 
       padding: '20px', 
       borderRadius: '12px', 
       boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.1)', 
-      backgroundColor: '#f5f5f5'
+      backgroundColor: 'var(--appBg)', 
+      border: '1px solid var(--primary-light)',
+      color: 'var(--textApp)',
+      transition: 'all 0.3s ease',
+      '&:hover': {
+        border: '1px solid var(--primary-main)',
+        boxShadow: '0px 10px 20px rgba(14, 165, 233, 0.2)',
+      }
     }}>
       <CardContent>
-        <Typography variant="h5" component="div" gutterBottom sx={{ textAlign: 'center', fontWeight: 'bold', color: '#333' }}>
-          Обработано за месяц
+        <Typography variant="h5" component="div" gutterBottom sx={{ textAlign: 'center', fontWeight: 'bold', color: 'var(--textApp)' }}>
+        Processed in a month
         </Typography>
 
         {firstCall ? (
           <>
             {/* Идентификатор первого клиента */}
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <People sx={{ color: 'blue', marginRight: '10px' }} />
-              <Typography variant="body1" color="text.secondary">
-                <strong>ID клиента:</strong> {firstCall.employeeId}
+              <People sx={{ color: 'var(--primary-main)', marginRight: '10px' }} />
+              <Typography variant="body1" sx={{ color: 'var(--light-grey)' }}>
+                <strong>ID Employee:</strong> {firstCall.employeeId}
               </Typography>
             </Box>
 
             {/* Общее количество звонков */}
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <Call sx={{ color: 'green', marginRight: '10px' }} />
-              <Typography variant="body1" color="text.secondary">
-                <strong>Всего звонков:</strong> {calls.length}
+              <Call sx={{ color: 'var(--success)', marginRight: '10px' }} />
+              <Typography variant="body1" sx={{ color: 'var(--light-grey)' }}>
+                <strong>Total calls:</strong> {calls.length}
               </Typography>
             </Box>
 
             {/* Общая продолжительность звонков */}
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <AccessTime sx={{ color: 'gray', marginRight: '10px' }} />
-              <Typography variant="body1" color="text.secondary">
-                <strong>Общая продолжительность (секунды):</strong> {totalDuration}
+              <AccessTime sx={{ color: 'var(--light-grey)', marginRight: '10px' }} />
+              <Typography variant="body1" sx={{ color: 'var(--light-grey)' }}>
+                <strong>Total duration (minets):</strong> {(totalDuration/60).toFixed(2)}
               </Typography>
             </Box>
 
             {/* Количество негативных звонков */}
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <MoodBad sx={{ color: 'red', marginRight: '10px' }} />
-              <Typography variant="body1" color="text.secondary">
-                <strong>Негативные звонки:</strong> {negativeCalls}
+              <MoodBad sx={{ color: 'var(--error)', marginRight: '10px' }} />
+              <Typography variant="body1" sx={{ color: 'var(--light-grey)' }}>
+                <strong>Negative calls:</strong> {negativeCalls}
               </Typography>
             </Box>
 
             {/* Количество звонков, требующих дальнейших действий */}
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <Feedback sx={{ color: 'orange', marginRight: '10px' }} />
-              <Typography variant="body1" color="text.secondary">
-                <strong>Требуют дальнейших действий:</strong> {followUpCalls}
+              <Feedback sx={{ color: 'var(--primary-main)', marginRight: '10px' }} />
+              <Typography variant="body1" sx={{ color: 'var(--light-grey)' }}>
+                <strong>Further actions required:</strong> {followUpCalls}
               </Typography>
             </Box>
-
-            {/* Комментарий агента */}
-            {/* <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Comment sx={{ color: 'gray', marginRight: '10px' }} />
-              <Typography variant="body1" color="text.secondary">
-                <strong>Комментарий агента:</strong> {firstCall.agentComment}
-              </Typography>
-            </Box> */}
           </>
         ) : (
-          <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
-            Нет данных о звонках.
+          <Typography variant="body2" sx={{ textAlign: 'center', color: 'var(--light-grey)' }}>
+            No call data.
           </Typography>
         )}
       </CardContent>
@@ -96,47 +115,3 @@ const CallAnaliticsCardOne: FC = () => {
 };
 
 export default CallAnaliticsCardOne;
-
-
-// import { FC } from 'react';
-// import { Card, CardContent, Typography } from '@mui/material';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '@/store/store';
-
-// const CallCard: FC = () => {
-//   // Получение данных о звонках из состояния
-//   const calls = useSelector((state: RootState) => state.calls.data);
-
-//   // Если звонки есть, берем первый элемент и суммируем duration
-//   const firstCall = calls.length > 0 ? calls[0] : null;
-//   const totalDuration = calls.reduce((acc, call) => acc + call.duration, 0);
-
-//   return (
-//     <Card sx={{ minWidth: 345, minHeight: 245, margin: 'auto', padding: '20px', borderRadius: '10px', boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)' }}>
-//       <CardContent>
-//         <Typography variant="h5" component="div" gutterBottom>
-//           Clients обработано за месяц
-//         </Typography>
-//         {firstCall ? (
-//           <>
-//             <Typography variant="body2" color="text.secondary">
-//               <strong>First Client ID:</strong> {firstCall.id}
-//             </Typography>
-//             <Typography variant="body2" color="text.secondary">
-//               <strong>Общее количество звонков:</strong> {calls.length}
-//             </Typography>
-//             <Typography variant="body2" color="text.secondary">
-//               <strong>Общая продолжительность (секунды):</strong> {totalDuration}
-//             </Typography>
-//           </>
-//         ) : (
-//           <Typography variant="body2" color="text.secondary">
-//             Нет данных о звонках.
-//           </Typography>
-//         )}
-//       </CardContent>
-//     </Card>
-//   );
-// };
-
-// export default CallCard;

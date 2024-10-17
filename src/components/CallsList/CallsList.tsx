@@ -4,11 +4,8 @@ import { fetchCallsData, addCall, updateCall, removeCall, clearError } from '@/s
 import { RootState, AppDispatch } from '@/store/store';
 import { CallRecord } from '@/utils/callsZodSchema';
 import {
-  Card,
-  CardContent,
   Typography,
   Button,
-  Grid,
   Box,
   Avatar,
   IconButton,
@@ -21,6 +18,13 @@ import {
   Select,
   MenuItem,
   Pagination,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from '@mui/material';
 import {
   Dialog,
@@ -28,9 +32,10 @@ import {
   DialogContent,
   DialogActions,
 } from '@mui/material';
-
 import { Delete, Edit, CallMade, CallReceived } from '@mui/icons-material';
 import dayjs from 'dayjs';
+import Loader from '../Loader/Loader';
+import PageHeader from '../PageHeader/PageHeader';
 
 const CallsList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -67,9 +72,7 @@ const CallsList: React.FC = () => {
     }
   }, [status]);
 
-
-
-  //редактирование звонка нужно открыть модальное окно доработать
+  // Редактирование звонка - открытие модального окна
   const [editCall, setEditCall] = useState<CallRecord | null>(null);
 
   const handleEditCall = (call: CallRecord) => {
@@ -88,11 +91,6 @@ const CallsList: React.FC = () => {
   const handleCloseEdit = () => {
     setEditCall(null);
   };
-
-
-
-
-
 
   // Обработчики для синхронных действий
   const handleAddCall = () => {
@@ -181,14 +179,16 @@ const CallsList: React.FC = () => {
 
   // Обработчик изменения страницы
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    console.log(event);
     setCurrentPage(value);
   };
 
   return (
-    <Box sx={{ padding: '20px' }}>
-      <Typography variant="h4" gutterBottom className="text-app">
-        Список Звонков
-      </Typography>
+    <Box sx={{ padding: '20px', backgroundColor: 'var(--appBg)', minHeight: '100vh' }}>
+      {/* <Typography variant="h4" gutterBottom sx={{ color: 'var(--light)' }}>
+        Call List
+      </Typography> */}
+      <PageHeader title="Calls" descr="List of all calls" />
 
       {/* Форма фильтрации и поиска */}
       <Box
@@ -196,65 +196,171 @@ const CallsList: React.FC = () => {
           display: 'flex',
           flexWrap: 'wrap',
           gap: '20px',
+          marginTop: '20px',
           marginBottom: '20px',
         }}
       >
         <TextField
-          label="Поиск по Employee ID или Client ID"
+          label="Search by Employee ID or Client ID"
           variant="outlined"
           value={searchTerm}
           onChange={handleSearchChange}
           fullWidth
-          sx={{ minWidth: '250px', background: 'white' }}
+          sx={{
+            minWidth: '250px',
+            backgroundColor: 'var(--appBg)',
+            '& .MuiOutlinedInput-root': {
+              color: 'var(--light)',
+              '& fieldset': {
+                borderColor: 'var(--primary-light)',
+              },
+              '&:hover fieldset': {
+                borderColor: 'var(--primary-main)',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: 'var(--primary-main)',
+              },
+            },
+            '& .MuiInputLabel-root': {
+              color: 'var(--light)',
+            },
+            '& .MuiInputLabel-root.Mui-focused': {
+              color: 'var(--light)',
+            },
+          }}
+          InputLabelProps={{
+            style: { color: 'var(--light)' },
+          }}
         />
 
-        <FormControl variant="outlined" sx={{ minWidth: 400, background: 'white' }}>
-          <InputLabel id="filter-type-label">Тип звонка</InputLabel>
+        <FormControl
+          variant="outlined"
+          sx={{
+            minWidth: 200,
+            backgroundColor: 'var(--appBg)',
+            '& .MuiInputBase-root': {
+              color: 'var(--light)',
+            },
+            '& .MuiInputLabel-root': {
+              color: 'var(--light)',
+            },
+            '& .MuiSelect-outlined': {
+              color: 'var(--light)',
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--primary-light)',
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--primary-main)',
+            },
+            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--primary-main)',
+            },
+          }}
+          InputLabelProps={{
+            style: { color: 'var(--light)' },
+          }}
+        >
+          <InputLabel id="filter-type-label">Call type</InputLabel>
           <Select
             labelId="filter-type-label"
             value={filterType}
             onChange={handleFilterTypeChange}
-            label="Тип звонка"
+            label="Call type"
           >
             <MenuItem value="">
-              <em>Все</em>
+              <em>All</em>
             </MenuItem>
-            <MenuItem value="outgoing">Исходящий</MenuItem>
-            <MenuItem value="incoming">Входящий</MenuItem>
+            <MenuItem value="outgoing">Outgoing</MenuItem>
+            <MenuItem value="incoming">Incoming</MenuItem>
           </Select>
         </FormControl>
 
-        <FormControl variant="outlined" sx={{ minWidth: 400, background: 'white' }}>
-          <InputLabel id="filter-state-label">Состояние</InputLabel>
+        <FormControl
+          variant="outlined"
+          sx={{
+            minWidth: 200,
+            backgroundColor: 'var(--appBg)',
+            '& .MuiInputBase-root': {
+              color: 'var(--light)',
+            },
+            '& .MuiInputLabel-root': {
+              color: 'var(--light)',
+            },
+            '& .MuiSelect-outlined': {
+              color: 'var(--light)',
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--primary-light)',
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--primary-main)',
+            },
+            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--primary-main)',
+            },
+          }}
+          InputLabelProps={{
+            style: { color: 'var(--light)' },
+          }}
+        >
+          <InputLabel id="filter-state-label">State</InputLabel>
           <Select
             labelId="filter-state-label"
             value={filterState}
             onChange={handleFilterStateChange}
-            label="Состояние"
+            label="State"
           >
             <MenuItem value="">
-              <em>Все</em>
+              <em>All</em>
             </MenuItem>
-            <MenuItem value="completed">Завершённый</MenuItem>
-            <MenuItem value="missed">Пропущенный</MenuItem>
-            <MenuItem value="in-progress">В процессе</MenuItem>
+            <MenuItem value="completed">Completed</MenuItem>
+            <MenuItem value="missed">Missed</MenuItem>
+            <MenuItem value="in-progress">In progress</MenuItem>
           </Select>
         </FormControl>
 
-        <FormControl variant="outlined" sx={{ minWidth: 400, background: 'white' }}>
-          <InputLabel id="filter-mood-label">Настроение</InputLabel>
+        <FormControl
+          variant="outlined"
+          sx={{
+            minWidth: 200,
+            backgroundColor: 'var(--appBg)',
+            '& .MuiInputBase-root': {
+              color: 'var(--light)',
+            },
+            '& .MuiInputLabel-root': {
+              color: 'var(--light)',
+            },
+            '& .MuiSelect-outlined': {
+              color: 'var(--light)',
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--primary-light)',
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--primary-main)',
+            },
+            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--primary-main)',
+            },
+          }}
+          InputLabelProps={{
+            style: { color: 'var(--light)' },
+          }}
+        >
+          <InputLabel id="filter-mood-label">Mood</InputLabel>
           <Select
             labelId="filter-mood-label"
             value={filterMood}
             onChange={handleFilterMoodChange}
-            label="Настроение"
+            label="Mood"
           >
             <MenuItem value="">
               <em>Все</em>
             </MenuItem>
-            <MenuItem value="positive">Позитивное</MenuItem>
-            <MenuItem value="neutral">Нейтральное</MenuItem>
-            <MenuItem value="negative">Негативное</MenuItem>
+            <MenuItem value="positive">Positive</MenuItem>
+            <MenuItem value="neutral">Neutral</MenuItem>
+            <MenuItem value="negative">Negative</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -263,116 +369,142 @@ const CallsList: React.FC = () => {
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
         <Button
           variant="contained"
-          color="primary"
-          onClick={handleAddCall}
-          startIcon={<CallMade />}
           sx={{
+            backgroundColor: 'var(--primary-main)',
+            color: 'var(--light)',
             textTransform: 'none',
             borderRadius: '8px',
             padding: '10px 20px',
+            '&:hover': {
+              backgroundColor: 'var(--primary-dark)',
+            },
           }}
+          onClick={handleAddCall}
+          startIcon={<CallMade sx={{ color: 'var(--light)' }} />}
         >
-          Добавить Звонок
+          Add Call
         </Button>
       </Box>
 
       {/* Состояния загрузки, ошибки и успешного отображения */}
       {status === 'loading' && (
-        <Typography variant="h6" className="text-app">
-          Загрузка...
+        <Typography variant="h6" sx={{ color: 'var(--light)' }}>
+          <Loader />
         </Typography>
       )}
       {status === 'failed' && (
         <>
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-            <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
-              Ошибка: {error}
+            <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%', backgroundColor: 'var(--appBg)', color: 'var(--light)' }}>
+              Error text now: {error}
             </Alert>
           </Snackbar>
         </>
       )}
       {status === 'succeeded' && (
         <>
-          <Grid container spacing={3}>
-            {paginatedCalls.map((call) => (
-              <Grid item xs={12} md={6} lg={4} key={call.id}>
-                <Card
-                  sx={{
-                    borderRadius: '12px',
-                    boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
-                    transition: 'transform 0.2s',
-                    '&:hover': {
-                      transform: 'scale(1.02)',
-                    },
-                  }}
-                >
-                  <CardContent>
-                    <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                      <Avatar
-                        sx={{
-                          bgcolor: call.type === 'outgoing' ? 'primary.main' : 'secondary.main',
-                          marginRight: '10px',
-                        }}
-                      >
-                        {call.type === 'outgoing' ? <CallMade /> : <CallReceived />}
-                      </Avatar>
-                      <Typography variant="h6" component="div">
-                        {call.type === 'outgoing' ? 'Исходящий' : 'Входящий'} Звонок
-                      </Typography>
-                    </Box>
-
-                    <Typography variant="body2" color="text.secondary">
-                      <strong>ID Звонка:</strong> {call.id}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      <strong>Сотрудник:</strong> {call.employeeId}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      <strong>Клиент:</strong> {call.clientId}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      <strong>Начало:</strong> {formatDateTime(call.start)}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      <strong>Конец:</strong> {formatDateTime(call.end)}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      <strong>Длительность:</strong> {call.duration} секунд
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      <strong>Настроение:</strong> {call.callMood}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      <strong>Рейтинг обратной связи:</strong> {call.feedbackScore}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      <strong>Требуется ли обратная связь:</strong> {call.followUpRequired ? 'Да' : 'Нет'}
-                    </Typography>
-
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        marginTop: '15px',
-                      }}
-                    >
-                      <Tooltip title="Удалить Звонок">
-                        <IconButton color="error" onClick={() => handleRemoveCall(call.id)}>
-                          <Delete />
-                        </IconButton>
+          {/* Таблица звонков */}
+          <TableContainer component={Paper} sx={{ backgroundColor: 'var(--appBg)', borderRadius: '12px', border: '1px solid var(--primary-light)' }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ color: 'var(--light)', fontWeight: 'bold' }}>Type Call</TableCell>
+                  <TableCell sx={{ color: 'var(--light)', fontWeight: 'bold' }}>ID Call</TableCell>
+                  <TableCell sx={{ color: 'var(--light)', fontWeight: 'bold' }}>Employee</TableCell>
+                  <TableCell sx={{ color: 'var(--light)', fontWeight: 'bold' }}>Client</TableCell>
+                  <TableCell sx={{ color: 'var(--light)', fontWeight: 'bold' }}>Start</TableCell>
+                  <TableCell sx={{ color: 'var(--light)', fontWeight: 'bold' }}>End</TableCell>
+                  <TableCell sx={{ color: 'var(--light)', fontWeight: 'bold' }}>Duration</TableCell>
+                  <TableCell sx={{ color: 'var(--light)', fontWeight: 'bold' }}>Mood</TableCell>
+                  <TableCell sx={{ color: 'var(--light)', fontWeight: 'bold' }}>Feedback rating</TableCell>
+                  <TableCell sx={{ color: 'var(--light)', fontWeight: 'bold' }}>Is feedback required?</TableCell>
+                  <TableCell sx={{ color: 'var(--light)', fontWeight: 'bold' }}>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {paginatedCalls.map((call) => (
+                  <TableRow key={call.id} hover>
+                    <TableCell sx={{ color: 'var(--light)' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Avatar
+                          sx={{
+                            bgcolor: call.type === 'outgoing' ? 'var(--primary-main)' : 'var(--secondaryBg)',
+                            marginRight: '8px',
+                            width: 24,
+                            height: 24,
+                          }}
+                        >
+                          {call.type === 'outgoing' ? <CallMade sx={{ color: 'var(--light)' }} /> : <CallReceived sx={{ color: 'var(--light)' }} />}
+                        </Avatar>
+                        {call.type === 'outgoing' ? 'Outgoing' : 'Incoming'}
+                      </Box>
+                    </TableCell>
+                    {/* <TableCell sx={{ color: 'var(--light-grey)' }}>{call.id}</TableCell> */}
+                    <TableCell sx={{color: 'var(--light-grey)', maxWidth: '150px', whiteSpace: 'nowrap', overflow: 'hidden',textOverflow: 'ellipsis',}}>
+                      <Tooltip title={call.id} arrow>
+                        <span>{call.id}</span>
                       </Tooltip>
-                      {/* Здесь можно добавить кнопку для редактирования звонка и вызова модального кона */}
-                      <Tooltip title="Редактировать Звонок">
-                        <IconButton color="primary" onClick={() => handleEditCall(call)}>
-                          <Edit />
-                        </IconButton>
+                    </TableCell>
+                    {/* <TableCell sx={{ color: 'var(--light-grey)' }}>{call.employeeId}</TableCell> */}
+                    <TableCell sx={{color: 'var(--light-grey)', maxWidth: '150px', whiteSpace: 'nowrap', overflow: 'hidden',textOverflow: 'ellipsis',}}>
+                      <Tooltip title={call.employeeId} arrow>
+                        <span>{call.employeeId}</span>
                       </Tooltip>
-                    </Box>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+                    </TableCell>
+                    {/* <TableCell sx={{ color: 'var(--light-grey)' }}>{call.clientId}</TableCell> */}
+                    <TableCell sx={{color: 'var(--light-grey)', maxWidth: '150px', whiteSpace: 'nowrap', overflow: 'hidden',textOverflow: 'ellipsis',}}>
+                      <Tooltip title={call.clientId} arrow>
+                        <span>{call.clientId}</span>
+                      </Tooltip>
+                    </TableCell>
+                    <TableCell sx={{ color: 'var(--light-grey)' }}>{formatDateTime(call.start)}</TableCell>
+                    <TableCell sx={{ color: 'var(--light-grey)' }}>{formatDateTime(call.end)}</TableCell>
+                    <TableCell sx={{ color: 'var(--light-grey)' }}>{(call.duration/60).toFixed(2)} minets</TableCell>
+                    <TableCell sx={{ color: 'var(--light-grey)' }}>{call.callMood}</TableCell>
+                    <TableCell sx={{ color: 'var(--light-grey)' }}>{call.feedbackScore}</TableCell>
+                    <TableCell sx={{ color: 'var(--light-grey)' }}>{call.followUpRequired ? 'Yes' : 'No'}</TableCell>
+                    <TableCell>
+                      <Box sx={{ display: 'flex', gap: '8px' }}>
+                        <Tooltip title="Edit call">
+                          <IconButton
+                            onClick={() => handleEditCall(call)}
+                            sx={{
+                              color: 'var(--primary-main)',
+                              '&:hover': {
+                                color: 'var(--primary-dark)',
+                              },
+                            }}
+                          >
+                            <Edit />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete call">
+                          <IconButton
+                            onClick={() => handleRemoveCall(call.id)}
+                            sx={{
+                              color: 'var(--error)',
+                              '&:hover': {
+                                color: '#ff7961', // Легкий оттенок красного при наведении
+                              },
+                            }}
+                          >
+                            <Delete />
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {paginatedCalls.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={11} sx={{ textAlign: 'center', color: 'var(--light-grey)' }}>
+                      No call data.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
           {/* Пагинация */}
           {totalPages > 1 && (
@@ -381,55 +513,154 @@ const CallsList: React.FC = () => {
                 count={totalPages}
                 page={currentPage}
                 onChange={handlePageChange}
-                color="primary"
+                sx={{
+                  '& .MuiPaginationItem-root': {
+                    color: 'var(--light-grey)',
+                    '&.Mui-selected': {
+                      backgroundColor: 'var(--primary-main)',
+                      color: 'var(--light)',
+                      '&:hover': {
+                        backgroundColor: 'var(--primary-dark)',
+                      },
+                    },
+                  },
+                }}
               />
             </Box>
           )}
         </>
       )}
-      {/* модальное окно для редактирования звонка */}
-      <Dialog open={!!editCall} onClose={handleCloseEdit}>
-        <DialogTitle>Редактировать Звонок</DialogTitle>
+      {/* Модальное окно для редактирования звонка */}
+      <Dialog open={!!editCall} onClose={handleCloseEdit} fullWidth maxWidth="sm">
+        <DialogTitle sx={{ backgroundColor: 'var(--appBg)', color: 'var(--light)' }}>Edit Call</DialogTitle>
         {editCall && (
-          <DialogContent>
+          <DialogContent sx={{ backgroundColor: 'var(--appBg)', color: 'var(--light)' }}>
             <TextField
               margin="dense"
-              label="Сотрудник ID"
+              label="Employee ID"
               fullWidth
               variant="outlined"
               value={editCall.employeeId}
               onChange={(e) => setEditCall({ ...editCall, employeeId: e.target.value })}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  color: 'var(--light)',
+                  '& fieldset': {
+                    borderColor: 'var(--primary-light)',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'var(--primary-main)',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'var(--primary-main)',
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: 'var(--light)',
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: 'var(--light)',
+                },
+              }}
+              InputLabelProps={{
+                style: { color: 'var(--light)' },
+              }}
             />
             <TextField
               margin="dense"
-              label="Клиент ID"
+              label="Client ID"
               fullWidth
               variant="outlined"
               value={editCall.clientId}
               onChange={(e) => setEditCall({ ...editCall, clientId: e.target.value })}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  color: 'var(--light)',
+                  '& fieldset': {
+                    borderColor: 'var(--primary-light)',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'var(--primary-main)',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'var(--primary-main)',
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: 'var(--light)',
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: 'var(--light)',
+                },
+              }}
+              InputLabelProps={{
+                style: { color: 'var(--light)' },
+              }}
             />
             {/* Добавьте другие поля по необходимости */}
-            <FormControl fullWidth margin="dense">
-              <InputLabel id="edit-type-label">Тип звонка</InputLabel>
+            <FormControl
+              fullWidth
+              margin="dense"
+              variant="outlined"
+              sx={{
+                '& .MuiInputBase-root': {
+                  color: 'var(--light)',
+                },
+                '& .MuiInputLabel-root': {
+                  color: 'var(--light)',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: 'var(--primary-light)',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: 'var(--primary-main)',
+                },
+                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: 'var(--primary-main)',
+                },
+              }}
+              InputLabelProps={{
+                style: { color: 'var(--light)' },
+              }}
+            >
+              <InputLabel id="edit-type-label">Type Call</InputLabel>
               <Select
                 labelId="edit-type-label"
                 value={editCall.type}
-                onChange={(e) => setEditCall({ ...editCall, type: e.target.value as string })}
-                label="Тип звонка"
+                onChange={(e) => setEditCall({ ...editCall, type: e.target.value as "outgoing" | "incoming" })}
+                label="Type Call"
               >
-                <MenuItem value="outgoing">Исходящий</MenuItem>
-                <MenuItem value="incoming">Входящий</MenuItem>
+                <MenuItem value="outgoing">Outgoing</MenuItem>
+                <MenuItem value="incoming">Incoming</MenuItem>
               </Select>
             </FormControl>
-            {/* Продолжайте добавлять поля для всех необходимых данных */}
+            {/* Добавьте дополнительные поля здесь */}
           </DialogContent>
         )}
-        <DialogActions>
-          <Button onClick={handleCloseEdit} color="secondary">
-            Отмена
+        <DialogActions sx={{ backgroundColor: 'var(--appBg)' }}>
+          <Button
+            onClick={handleCloseEdit}
+            sx={{
+              color: 'var(--light-grey)',
+              '&:hover': {
+                backgroundColor: 'rgba(235, 237, 241, 0.1)',
+              },
+            }}
+          >
+            Cancel
           </Button>
-          <Button onClick={handleSaveCall} color="primary" variant="contained">
-            Сохранить
+          <Button
+            onClick={handleSaveCall}
+            variant="contained"
+            sx={{
+              backgroundColor: 'var(--primary-main)',
+              color: 'var(--light)',
+              '&:hover': {
+                backgroundColor: 'var(--primary-dark)',
+              },
+            }}
+          >
+            Save
           </Button>
         </DialogActions>
       </Dialog>
