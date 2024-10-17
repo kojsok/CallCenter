@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import StyledScrollBar from '../common/StyledScrollbar/StyledScrollbar';
-import ControlledField from './ControlledField';
+import ControlledField from '../common/ControlledField/ControlledField';
 //validation rules
 import { clientFormRules } from './clientFormValidationRules';
 import { useClientForm } from '@/hooks/useClientForm';
