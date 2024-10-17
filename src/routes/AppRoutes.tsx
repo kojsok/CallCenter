@@ -6,6 +6,7 @@ import Clients from "@/Pages/Clients";
 import Home from "@/Pages/Home";
 import Profile from "@/Pages/Profile";
 import { createBrowserRouter } from "react-router-dom";
+import Protected from "./Protected";
 
 export const router = createBrowserRouter([
   {
@@ -13,20 +14,23 @@ export const router = createBrowserRouter([
     element: <Home />
   },
   {
-    // path: "/dashboard/",
-    element: <LayoutMain />,
+    element: <Protected><LayoutMain /></Protected>,
     children: [
       {
         path: 'profile',
         element: <Profile />,
       },
       {
-        path: 'adminpanel',
-        element: <AdminPanel />,
-      },
-      {
-        path: 'analytics',
-        element: <Analytics />
+        element: <Protected roles={['manager', 'admin']} />, children: [
+          {
+            path: 'adminpanel',
+            element: <AdminPanel />,
+          },
+          {
+            path: 'analytics',
+            element: <Analytics />
+          },
+        ]
       },
       {
         path: 'clients',

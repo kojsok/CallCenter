@@ -56,15 +56,15 @@ const authSlice = createSlice({
   },
 });
 
-//проверяем токен в хранилище, если токен на месте делаем попытку получения профиля.
+//thunk получения профиля пользователя. проверяем токен в хранилище, если токен на месте делаем попытку получения профиля.
 export const checkAuth = createAsyncThunk(
   "auth/checkAuth",
   async (_, { dispatch, rejectWithValue }) => {
     const token = localStorage.getItem("C-c_token");
     if (token) {
       try {
-        const profile = await getProfile();
         dispatch(giveAccess(token));
+        const profile = await getProfile();
         return profile;
       } catch (error) {
         //в слуае ошибки сбрасываем авторизационные данные
@@ -81,13 +81,5 @@ export const checkAuth = createAsyncThunk(
 export const { giveAccess, revokeAccess } = authSlice.actions;
 export default authSlice.reducer;
 
-export const selectAuth = (state: RootState) => ({
-  isAuthorized: state.auth.isAuthorized,
-  role: state.auth.role,
-});
 export const selectProfile = (state: RootState) => state.auth.profile;
-export const selectReqStatus = (state: RootState) => ({
-  error: state.auth.error,
-  success: state.auth.success,
-  loading: state.auth.loading,
-});
+export const selectAuthState = (state: RootState) => state.auth;

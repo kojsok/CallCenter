@@ -8,7 +8,7 @@ export const injectStore = (_store: StoreType) => {
   store = _store;
 };
 
-export const API_TOKEN = "2078289c-73e5-4137-8ceb-96445633512c";
+// export const API_TOKEN = "2078289c-73e5-4137-8ceb-96445633512c";
 
 //инициализация инстанса axios с общими для всех запросов настройками.
 export const Api = axios.create({
@@ -17,7 +17,7 @@ export const Api = axios.create({
   headers: {
     "Content-Type": "application/json",
     // Accept: "application/json",
-    Authorization: `Bearer ${API_TOKEN}`,
+    // Authorization: `Bearer ${API_TOKEN}`,
   },
 });
 
