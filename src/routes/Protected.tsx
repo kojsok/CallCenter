@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader/Loader";
 import { selectAuthState } from "@/store/authSlices/authSlice";
 import { FC, ReactNode } from "react";
 import { useSelector } from "react-redux";
@@ -24,8 +25,12 @@ interface ProtectedProps {
 
 const Protected: FC<ProtectedProps> = ({ roles = [], children }) => {
   const location = useLocation();
-  const { isAuthorized, role } = useSelector(selectAuthState)
+  const { isAuthorized, profile, loading } = useSelector(selectAuthState)
+  const role = profile?.auth_data.role || ''
 
+  if (loading) {
+    return <Loader />
+  }
   //если не авторизован или роль не содержится в списке допустимых то редирект
   if (!isAuthorized || (roles.length && !roles.includes(role))) {
     return <Navigate to='/' state={{ from: location.pathname }} />

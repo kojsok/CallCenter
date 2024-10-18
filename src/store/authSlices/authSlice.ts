@@ -1,7 +1,7 @@
 import { Profile } from "@/utils/schemasTypes";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { getProfile } from "@/api/authApi";
+import { getProfile, logout } from "@/api/authApi";
 
 interface ErrorState {
   message: string;
@@ -11,7 +11,6 @@ interface AuthState {
   isAuthorized: boolean;
   token: string | null;
   profile: Profile | null;
-  role: string;
   error: ErrorState | null;
   loading: boolean;
   success: boolean;
@@ -21,9 +20,8 @@ const initialState: AuthState = {
   isAuthorized: false,
   token: null,
   profile: null,
-  role: "",
   error: null,
-  loading: false,
+  loading: true,
   success: false,
 };
 
@@ -31,12 +29,13 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    giveAccess: (state, action: PayloadAction<string>) => {
-      state.isAuthorized = true;
+    saveToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
     },
-    revokeAccess: () => {
-      return initialState;
+    revokeAccess: (state) => {
+      state.isAuthorized = false;
+      state.token = null;
+      state.profile = null;
     },
   },
   extraReducers: (builder) => {
@@ -45,14 +44,27 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(checkAuth.fulfilled, (state, action: PayloadAction<Profile>) => {
+        state.isAuthorized = true;
         state.profile = action.payload;
-        state.role = action.payload.auth_data.role;
         state.loading = false;
         state.success = true;
       })
       .addCase(checkAuth.rejected, (state, action: PayloadAction<unknown>) => {
         state.error = action.payload as ErrorState;
-      });
+      })
+      .addCase(logoutThunk.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(logoutThunk.fulfilled, (state) => {
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(
+        logoutThunk.rejected,
+        (state, action: PayloadAction<unknown>) => {
+          state.error = action.payload as ErrorState;
+        }
+      );
   },
 });
 
@@ -62,8 +74,8 @@ export const checkAuth = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     const token = localStorage.getItem("C-c_token");
     if (token) {
+      dispatch(saveToken(token));
       try {
-        dispatch(giveAccess(token));
         const profile = await getProfile();
         return profile;
       } catch (error) {
@@ -78,8 +90,21 @@ export const checkAuth = createAsyncThunk(
   }
 );
 
-export const { giveAccess, revokeAccess } = authSlice.actions;
+export const logoutThunk = createAsyncThunk(
+  "auth/logout",
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      await logout();
+      dispatch(revokeAccess());
+    } catch (error) {
+      return rejectWithValue({ message: (error as Error).message });
+    }
+  }
+);
+
+export const { saveToken, revokeAccess } = authSlice.actions;
 export default authSlice.reducer;
 
 export const selectProfile = (state: RootState) => state.auth.profile;
+export const selectIsAuthorized = (state: RootState) => state.auth.isAuthorized;
 export const selectAuthState = (state: RootState) => state.auth;

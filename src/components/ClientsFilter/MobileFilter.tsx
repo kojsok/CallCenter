@@ -29,8 +29,8 @@ const MobileFilter: FC<MobileFilterProps> = ({ filterInner }) => {
         onClose={handleClose}
         variant="selectedMenu"
         anchorOrigin={{
-          vertical: 45, // Открыть меню снизу
-          horizontal: "center", // По правому краю якоря
+          vertical: 45,
+          horizontal: "center",
         }}
         sx={{
           "& .MuiMenu-paper": {

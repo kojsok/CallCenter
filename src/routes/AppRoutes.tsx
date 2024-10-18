@@ -14,11 +14,24 @@ export const router = createBrowserRouter([
     element: <Home />
   },
   {
+    element: <Protected><Profile /></Protected>,
+    path: 'profile'
+  },
+  {
+    path: 'dashboard',
     element: <Protected><LayoutMain /></Protected>,
     children: [
+      // {
+      //   path: 'profile',
+      //   element: <Profile />,
+      // },
       {
-        path: 'profile',
-        element: <Profile />,
+        path: 'clients',
+        element: <Clients />
+      },
+      {
+        path: 'calls',
+        element: <Calls />
       },
       {
         element: <Protected roles={['manager', 'admin']} />, children: [
@@ -32,14 +45,6 @@ export const router = createBrowserRouter([
           },
         ]
       },
-      {
-        path: 'clients',
-        element: <Clients />
-      },
-      {
-        path: 'calls',
-        element: <Calls />
-      }
     ]
   },
 ])
