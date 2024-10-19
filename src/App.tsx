@@ -10,7 +10,6 @@ function App() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(checkAuth())
-
   })
   return (
     <RouterProvider router={router} />

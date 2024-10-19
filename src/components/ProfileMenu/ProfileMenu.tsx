@@ -1,16 +1,17 @@
-import { selectProfile } from "@/store/authSlices/authSlice";
+import { logoutThunk, selectProfile } from "@/store/authSlices/authSlice";
+import { AppDispatch } from "@/store/store";
 import { Box, Button, Avatar, Typography, Tooltip, Menu, MenuItem, ListItemButton } from "@mui/material";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
 
 const ProfileMenu = () => {
+  const dispatch = useDispatch<AppDispatch>()
   //проверяем если в url есть profile или dashboard чтобы исключить их из меню пользователя
   const location = useLocation()
   const isProfile = location.pathname.includes('profile');
   const isDashboard = location.pathname.includes('dashboard')
-  console.log(location)
 
   const profile = useSelector(selectProfile);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -21,6 +22,11 @@ const ProfileMenu = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    dispatch(logoutThunk())
+    handleClose()
+  }
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
@@ -62,6 +68,7 @@ const ProfileMenu = () => {
             backgroundColor: "var(--secondaryBg05)",
             color: "var(--textApp)",
             backdropFilter: 'blur(10px)',
+            minWidth: '150px'
           },
           "& .MuiMenuItem-divider": {
             borderColor: 'var(--primary-light)'
@@ -69,28 +76,19 @@ const ProfileMenu = () => {
         }}
       >
         <MenuItem divider onClick={handleClose} disableGutters sx={{ py: 0, ...isProfile && { display: 'none' } }}>
-          <ListItemButton
-            sx={{
-              "&:hover": { backgroundColor: 'var(--primary-main)' },
-              transition: 'background-color 0.4s ease',
-
-            }}
-            component={Link}
-            to="/profile"
-          >
+          <ListItemButton sx={{ "&:hover": { backgroundColor: 'var(--primary-main)' }, transition: 'background-color 0.4s ease', }} component={Link} to="/profile">
             Profile
           </ListItemButton>
         </MenuItem>
-        <MenuItem
-          divider
-          onClick={handleClose}
-          disableGutters sx={{ py: 0, ...isDashboard && { display: 'none' } }}
-
-        >
-          <ListItemButton sx={{ "&:hover": { backgroundColor: 'var(--primary-main)' }, transition: 'background-color 0.4s ease' }} component={Link} to="/dashboard/clients">Dashboard</ListItemButton>
+        <MenuItem divider onClick={handleClose} disableGutters sx={{ py: 0, ...isDashboard && { display: 'none' } }} >
+          <ListItemButton sx={{ "&:hover": { backgroundColor: 'var(--primary-main)' }, transition: 'background-color 0.4s ease' }} component={Link} to="/dashboard/clients">
+            Dashboard
+          </ListItemButton>
         </MenuItem>
-        <MenuItem onClick={handleClose} disableGutters sx={{ py: 0 }}>
-          <ListItemButton sx={{ "&:hover": { backgroundColor: 'var(--primary-main)' }, transition: 'background-color 0.4s ease' }} >Logout</ListItemButton>
+        <MenuItem onClick={handleLogout} disableGutters sx={{ py: 0 }}>
+          <ListItemButton sx={{ "&:hover": { backgroundColor: 'var(--primary-main)' }, transition: 'background-color 0.4s ease' }} >
+            Logout
+          </ListItemButton>
         </MenuItem>
       </Menu>
     </Box>

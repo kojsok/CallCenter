@@ -41,6 +41,8 @@ export const useClientForm = (formType: "edit-form" | "add-form") => {
 
   const isEditForm = formType === "edit-form";
   // устанавливаем дефолтное значение из стора либо emptyForm
+
+  // !!!! обнулить активного клиента при переклчении
   const defaultValues = isEditForm && activeClient ? activeClient : emptyForm;
 
   const [responseMessage, setResponseMessage] = useState("");

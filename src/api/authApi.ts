@@ -16,6 +16,7 @@ export const getProfile = async (): Promise<Profile> => {
 export const login = async (authData: LoginSchema): Promise<LoginResponse> => {
   try {
     const response = await Api.post("/auth/login", authData);
+    console.log("response authApi", response);
     return loginResponseSchema.parse(response);
   } catch (error) {
     return handleError(error as Error);

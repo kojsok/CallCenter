@@ -1,7 +1,8 @@
-import { AppBar, Container, Typography, Button } from "@mui/material";
+import { AppBar, Container, Typography } from "@mui/material";
 import ProfileMenu from "../ProfileMenu/ProfileMenu";
 import { selectIsAuthorized } from "@/store/authSlices/authSlice";
 import { useSelector } from "react-redux";
+import SignInForm from "../SignInForm/SignInForm";
 
 const HomeAppBar = () => {
   const isAuthorized = useSelector(selectIsAuthorized);
@@ -18,12 +19,13 @@ const HomeAppBar = () => {
         </Typography>
         {
           isAuthorized && <ProfileMenu />
-          || <Button
-            variant="outlined"
-            sx={{ color: "var(--primary-main)" }}
-          >
-            Sign in
-          </Button>
+          || <SignInForm />
+          // <Button
+          //   variant="outlined"
+          //   sx={{ color: "var(--primary-main)" }}
+          // >
+          //   Sign in
+          // </Button>
         }
       </Container>
     </AppBar>

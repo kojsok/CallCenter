@@ -1,25 +1,23 @@
-import { AddClientFormData } from "@/utils/schemasTypes";
 import { TextField, TextFieldProps } from "@mui/material";
-import { FC } from "react";
-import { Controller, UseControllerProps } from "react-hook-form";
+import { Controller, FieldValues, UseControllerProps } from "react-hook-form";
 
-interface ControlledFieldProps {
-  controllerProps: UseControllerProps<AddClientFormData>,
-  fieldProps: TextFieldProps & { children?: React.ReactNode[] }
+interface ControlledFieldProps<T extends FieldValues> {
+  controllerProps: UseControllerProps<T>;
+  fieldProps: TextFieldProps & { children?: React.ReactNode };
 }
 
 // Компонент-обертка для Controller и TextField, предназначенный для инкапсуляции оформления и логики управления полями формы.
 // Он принимает свойства `controllerProps` для настройки Controller из react-hook-form 
 // и `fieldProps` для настройки TextField из Material-UI.
 
-const ControlledField: FC<ControlledFieldProps> = ({ controllerProps, fieldProps }) => {
+const ControlledField = <T extends FieldValues>(props: ControlledFieldProps<T>) => {
+  const { controllerProps, fieldProps } = props
   return (
     <Controller
       {...controllerProps}
       render={({ field }) => (
         <TextField
           {...field}
-          {...fieldProps}
           variant='standard'
           // margin="normal"
           fullWidth
@@ -74,6 +72,7 @@ const ControlledField: FC<ControlledFieldProps> = ({ controllerProps, fieldProps
               }
             }
           }}
+          {...fieldProps}
         >{fieldProps.children}</TextField>
       )}
     />

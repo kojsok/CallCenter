@@ -1,7 +1,7 @@
-import { Profile } from "@/utils/schemasTypes";
+import { LoginSchema, Profile } from "@/utils/schemasTypes";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { getProfile, logout } from "@/api/authApi";
+import { getProfile, login, logout } from "@/api/authApi";
 
 interface ErrorState {
   message: string;
@@ -64,7 +64,17 @@ const authSlice = createSlice({
         (state, action: PayloadAction<unknown>) => {
           state.error = action.payload as ErrorState;
         }
-      );
+      )
+      .addCase(loginThunk.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loginThunk.fulfilled, (state) => {
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(loginThunk.rejected, (state, action: PayloadAction<unknown>) => {
+        state.error = action.payload as ErrorState;
+      });
   },
 });
 
@@ -73,8 +83,11 @@ export const checkAuth = createAsyncThunk(
   "auth/checkAuth",
   async (_, { dispatch, rejectWithValue }) => {
     const token = localStorage.getItem("C-c_token");
+    console.log("token checkAuth", token);
     if (token) {
+      // сохраняем токен в сторе
       dispatch(saveToken(token));
+      // запрашиваем профиль пользователя
       try {
         const profile = await getProfile();
         return profile;
@@ -94,8 +107,27 @@ export const logoutThunk = createAsyncThunk(
   "auth/logout",
   async (_, { dispatch, rejectWithValue }) => {
     try {
+      //разлогиниваемся
       await logout();
+      // удаляем токен из хранилища
+      localStorage.removeItem("C-c_token");
+      // обнуляем состояние авторизации
       dispatch(revokeAccess());
+    } catch (error) {
+      return rejectWithValue({ message: (error as Error).message });
+    }
+  }
+);
+
+export const loginThunk = createAsyncThunk(
+  "auth/login",
+  async (loginData: LoginSchema, { dispatch, rejectWithValue }) => {
+    try {
+      console.log("loging thunk");
+      const response = await login(loginData);
+      console.log("loging res", response);
+      localStorage.setItem("C-c_token", response.accesToken);
+      dispatch(checkAuth());
     } catch (error) {
       return rejectWithValue({ message: (error as Error).message });
     }
@@ -105,6 +137,7 @@ export const logoutThunk = createAsyncThunk(
 export const { saveToken, revokeAccess } = authSlice.actions;
 export default authSlice.reducer;
 
+//селекторы для данного слайса
 export const selectProfile = (state: RootState) => state.auth.profile;
 export const selectIsAuthorized = (state: RootState) => state.auth.isAuthorized;
 export const selectAuthState = (state: RootState) => state.auth;

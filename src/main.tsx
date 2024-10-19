@@ -8,6 +8,9 @@ import { Provider } from 'react-redux'
 import { store } from './store/store.ts'
 import { injectStore } from './api/Api'
 
+//устанавливает фейковый токен для демонстрации
+localStorage.setItem('C-c_token', "2078289c-73e5-4137-8ceb-96445633512c")
+
 injectStore(store)
 
 

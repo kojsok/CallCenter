@@ -62,8 +62,7 @@ export const handleError = (error: Error) => {
 
     throw new Error(zodErrorMessage);
   }
-  const unexpectedError =
-    "Unexpected error occurred (Произошла непредвиденная ошибка)";
+  const unexpectedError = `Unexpected error occurred (Произошла непредвиденная ошибка): ${error}`;
   console.error(unexpectedError); // Вывод ошибки в консоль
   throw new Error(unexpectedError);
 };
