@@ -19,7 +19,7 @@ export const empolyeeDataSchema = z.object({
     email: z.string().email({ message: "Неверный формат email" }),
   }),
   languages: z.string().optional().array(),
-  gender: z.enum(["male", "female"]),
+  gender: z.enum(["male", "female", "diverse"]),
   position: z.string(),
   status: z.enum(["free", "on-break", "busy"]),
   createdAt: z.string().datetime(),
