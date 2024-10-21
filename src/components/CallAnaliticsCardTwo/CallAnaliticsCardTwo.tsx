@@ -71,12 +71,12 @@ const CallAnaliticsCardTwo: FC = () => {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Timer sx={{ color: 'var(--light-grey)', marginRight: '10px' }} />
               <Typography variant="body1" sx={{ color: 'var(--light-grey)' }}>
-                <strong>Duration (minets):</strong> {(firstCall.duration/60).toFixed(2)}
+                <strong>Duration (minets):</strong> {(firstCall.duration / 60).toFixed(2)}
               </Typography>
             </Box>
           </>
         ) : (
-          <Typography variant="body2" sx={{ textAlign: 'center', color: 'var(--light-grey)' }}>            
+          <Typography variant="body2" sx={{ textAlign: 'center', color: 'var(--light-grey)' }}>
             No call data.
           </Typography>
         )}

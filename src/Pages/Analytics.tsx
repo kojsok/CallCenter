@@ -6,24 +6,27 @@ import CallChartAnalitics from "@/components/CallChartAnalitics/CallChartAnaliti
 import PageHeader from "@/components/PageHeader/PageHeader";
 
 
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 const Analytics = () => {
   return (
-    <Box className="flex flex-col gap-5 ">
-      <Box className="p-5">
-        <PageHeader title="Analytics" descr="Analytics calls" />
+    <Container>
+
+      <Box className="flex flex-col gap-5 ">
+        <Box className="py-5">
+          <PageHeader title="Analytics" descr="Analytics calls" />
+        </Box>
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }} className="gap-5 py-5">
+          <CallAnaliticsCardOne />
+          <CallAnaliticsCardTwo />
+          <CallAnalyticsCardThree />
+        </Box>
+        <Box className="p-5">
+          <CallChartAnalitics />
+        </Box>
       </Box>
-      <Box sx={{display: 'flex', flexDirection: { xs: 'column', md: 'row' }}} className="gap-5 p-5"> 
-        <CallAnaliticsCardOne />
-        <CallAnaliticsCardTwo />
-        <CallAnalyticsCardThree />
-      </Box>
-      <Box className="p-5">
-        <CallChartAnalitics />
-      </Box>
-      
-    </Box>    
+    </Container>
+
   );
 }
 

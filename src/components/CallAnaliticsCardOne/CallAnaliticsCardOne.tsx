@@ -20,8 +20,8 @@ const CallAnaliticsCardOne: FC = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
 
-   // Получение данных при монтировании компонента
-   useEffect(() => {
+  // Получение данных при монтировании компонента
+  useEffect(() => {
     if (status === 'idle') {
       dispatch(fetchCallsData());
     }
@@ -44,11 +44,11 @@ const CallAnaliticsCardOne: FC = () => {
       display: 'flex', // Flexbox для контроля содержимого внутри
       flexDirection: 'column',
       justifyContent: 'space-between',
-      margin: 'auto', 
-      padding: '20px', 
-      borderRadius: '12px', 
-      boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.1)', 
-      backgroundColor: 'var(--appBg)', 
+      margin: 'auto',
+      padding: '20px',
+      borderRadius: '12px',
+      boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.1)',
+      backgroundColor: 'var(--appBg)',
       border: '1px solid var(--primary-light)',
       color: 'var(--textApp)',
       transition: 'all 0.3s ease',
@@ -59,7 +59,7 @@ const CallAnaliticsCardOne: FC = () => {
     }}>
       <CardContent>
         <Typography variant="h5" component="div" gutterBottom sx={{ textAlign: 'center', fontWeight: 'bold', color: 'var(--textApp)' }}>
-        Processed in a month
+          Processed in a month
         </Typography>
 
         {firstCall ? (
@@ -84,7 +84,7 @@ const CallAnaliticsCardOne: FC = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
               <AccessTime sx={{ color: 'var(--light-grey)', marginRight: '10px' }} />
               <Typography variant="body1" sx={{ color: 'var(--light-grey)' }}>
-                <strong>Total duration (minets):</strong> {(totalDuration/60).toFixed(2)}
+                <strong>Total duration (minets):</strong> {(totalDuration / 60).toFixed(2)}
               </Typography>
             </Box>
 
