@@ -37,19 +37,25 @@ const Profile = () => {
             justifySelf: 'end',
             mt: {
               xs: '-35%',
-              sm: '-45%'
+              sm: '-30%'
             },
             borderRadius: '20px'
           }}
         />
-        <Box>
+        <Box className="relative">
+          <Chip label={status} color={chipMap[status]} sx={{
+            minWidth: '80px',
+            height: '26px',
+            '& .MuiChip-label': {
+              textTransform: 'capitalize'
+            }
+          }} />
           <Typography variant="h2" sx={{ color: 'var(--textApp)', fontSize: 'clamp(1.25rem, 1.364vw + 0.977rem, 2rem)', fontWeight: '600' }}>
             {user?.employee_data.name}
           </Typography>
           <Typography variant="body1" sx={{ color: 'var(--text-second)' }}>
             {user?.employee_data.position}
           </Typography>
-          <Chip label={status} color={chipMap[status]} />
         </Box>
       </Box>
     </LayoutSecond>
