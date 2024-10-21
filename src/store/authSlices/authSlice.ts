@@ -83,7 +83,6 @@ export const checkAuth = createAsyncThunk(
   "auth/checkAuth",
   async (_, { dispatch, rejectWithValue }) => {
     const token = localStorage.getItem("C-c_token");
-    console.log("token checkAuth", token);
     if (token) {
       // сохраняем токен в сторе
       dispatch(saveToken(token));
@@ -123,10 +122,9 @@ export const loginThunk = createAsyncThunk(
   "auth/login",
   async (loginData: LoginSchema, { dispatch, rejectWithValue }) => {
     try {
-      console.log("loging thunk");
       const response = await login(loginData);
-      console.log("loging res", response);
       localStorage.setItem("C-c_token", response.accesToken);
+      //при успешном получении токена и записи его в хранилище инциируем проверку его валидности и запрашиваем данные о пользователе
       dispatch(checkAuth());
     } catch (error) {
       return rejectWithValue({ message: (error as Error).message });

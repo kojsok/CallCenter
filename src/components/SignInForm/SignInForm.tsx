@@ -18,7 +18,6 @@ const SignInForm = () => {
   })
 
   const onSubmit = async (loginData: LoginSchema) => {
-    console.log(loginData)
     await dispatch(loginThunk(loginData))
     reset()
   }
@@ -137,7 +136,3 @@ const SignInForm = () => {
 }
 
 export default SignInForm;
-
-function checkauth(): any {
-  throw new Error("Function not implemented.");
-}

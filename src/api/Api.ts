@@ -28,7 +28,7 @@ Api.interceptors.request.use(
     if (!request.url) {
       return Promise.reject(new Error("Request URL is undefined"));
     }
-    if (request.url !== "auth/login") {
+    if (request.url !== "/auth/login") {
       //получаем токен из стора
       const token = store.getState().auth.token;
       if (token) {
@@ -62,7 +62,8 @@ export const handleError = (error: Error) => {
 
     throw new Error(zodErrorMessage);
   }
-  const unexpectedError = `Unexpected error occurred (Произошла непредвиденная ошибка): ${error}`;
-  console.error(unexpectedError); // Вывод ошибки в консоль
-  throw new Error(unexpectedError);
+  // const unexpectedError = `Unexpected error occurred (Произошла непредвиденная ошибка): ${error}`;
+  // console.error(unexpectedError); // Вывод ошибки в консоль
+  console.log(error);
+  throw error;
 };
