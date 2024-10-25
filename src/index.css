@@ -46,6 +46,16 @@ body {
   @apply bg-appBg;
 }
 
+.bg-pattern {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.clip-text {
+  background-clip: text;
+  color: transparent;
+}
+
 /*@container media query for client form responsiveness*/
 .clientForm {
   container-type: inline-size;

@@ -33,7 +33,7 @@ const Clients = () => {
   ]
   return (
     <Container>
-      <Box className='py-8 flex grow gap-y-8 flex-col h-[calc(100vh-65px)]'>
+      <Box className='py-8 flex grow gap-y-8 flex-col h-[110vh]'>
         <PageHeader title="Clients" descr='List Your Clients'></PageHeader>
         <Box
           className="

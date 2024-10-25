@@ -1,4 +1,4 @@
-import SearchAppBar from "@/components/SearchAppBar/SearchAppBar";
+import SearchAppBar from "@/components/AppBar/SearchAppBar";
 import SideMenu from "@/components/SideMenu/SideMenu";
 import { Box } from "@mui/material";
 import { Outlet } from "react-router";
