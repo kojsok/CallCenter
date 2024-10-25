@@ -1,0 +1,51 @@
+import LayoutMain from "@/Layouts/LayoutMain";
+import AdminPanel from "@/Pages/AdminPanel";
+import Analytics from "@/Pages/Analytics";
+import Calls from "@/Pages/Call";
+import Clients from "@/Pages/Clients";
+import Home from "@/Pages/Home";
+import Profile from "@/Pages/Profile";
+import { createBrowserRouter } from "react-router-dom";
+import Protected from "./Protected";
+
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />
+  },
+  {
+    element: <Protected><Profile /></Protected>,
+    path: 'profile'
+  },
+  {
+    path: 'dashboard',
+    element: <Protected><LayoutMain /></Protected>,
+    children: [
+      // {
+      //   path: 'profile',
+      //   element: <Profile />,
+      // },
+      {
+        path: 'clients',
+        element: <Clients />
+      },
+      {
+        path: 'calls',
+        element: <Calls />
+      },
+      {
+        element: <Protected roles={['manager', 'admin']} />, children: [
+          {
+            path: 'adminpanel',
+            element: <AdminPanel />,
+          },
+          {
+            path: 'analytics',
+            element: <Analytics />
+          },
+        ]
+      },
+    ]
+  },
+])
+
